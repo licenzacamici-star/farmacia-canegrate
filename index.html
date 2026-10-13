@@ -176,10 +176,10 @@
       </div>
       <dl class="mt-10 grid max-w-xl grid-cols-3 gap-4 border-t border-line pt-6">
         <div><dt class="text-xs font-bold uppercase tracking-wider text-muted">Oggi</dt><dd class="today-hours mt-1 text-[15px] font-bold text-ink">—</dd></div>
-        <div><dt class="text-xs font-bold uppercase tracking-wider text-muted">Ricette</dt><dd class="mt-1 text-[15px] font-bold text-ink">Pronte in giornata*</dd></div>
+        <div><dt class="text-xs font-bold uppercase tracking-wider text-muted">Ordini</dt><dd class="mt-1 text-[15px] font-bold text-ink">WhatsApp e ritiro*</dd></div>
         <div><dt class="text-xs font-bold uppercase tracking-wider text-muted">Distributore</dt><dd class="h24-short mt-1 text-[15px] font-bold text-ink">H24</dd></div>
       </dl>
-      <p class="mt-3 text-xs text-muted">*Salvo farmaci da ordinare: ti avvisiamo noi quando sono disponibili.</p>
+      <p class="mt-3 text-xs text-muted">*Ricette e ordini pronti di solito in giornata: ti avvisiamo noi quando puoi passare.</p>
       <a data-rating target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-3 rounded-full border border-line bg-paper py-2 pl-3 pr-4 text-sm transition hover:border-forest-500">
         <span class="font-display text-lg font-semibold text-ink r-voto">5,0</span>
         <span class="text-sun" aria-hidden="true">★★★★★</span>
@@ -349,6 +349,10 @@
         <div data-pane="prodotto" class="hidden">
           <label class="label" for="rxProd">Cosa ti serve?</label>
           <textarea class="field min-h-28" id="rxProd" name="prodotto" placeholder="Es. integratore di magnesio, crema solare SPF 50 per bambini, antiparassitario per cane 10–20 kg…"></textarea>
+          <label class="mt-3 flex items-start gap-3 rounded-xl bg-paper p-3 text-sm">
+            <input type="checkbox" name="pagaOnline" class="mt-0.5 h-4 w-4 accent-forest-700" checked>
+            <span>Voglio pagare online: inviatemi il link di pagamento</span>
+          </label>
         </div>
 
         <div class="grid gap-5 sm:grid-cols-2">
@@ -379,6 +383,47 @@
           <button type="submit" data-via="mail" class="btn-ghost flex-1 !py-3.5">Invia via email</button>
         </div>
       </form>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ ORDINA, PAGA ONLINE, RITIRA ============ -->
+<section id="ordina" class="scroll-mt-24 bg-paper pb-20 lg:pb-28">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6">
+    <div class="reveal overflow-hidden rounded-[32px] bg-forest-50 ring-1 ring-forest-100">
+      <div class="grid gap-10 p-7 sm:p-10 lg:grid-cols-[1fr_1.3fr] lg:p-14">
+        <div>
+          <p class="eyebrow"><span class="h-px w-6 bg-forest-500"></span>Ordina e ritira</p>
+          <h2 class="h2 mt-3">Ordina su WhatsApp,<br>paga online, ritira da noi.</h2>
+          <p class="mt-4 text-lg text-muted">Cosmetici, integratori, prodotti per l'infanzia e per la casa: li prepariamo noi, tu passi solo a prenderli. Niente code alla cassa.</p>
+          <a data-wa="Buongiorno, vorrei fare un ordine da ritirare in farmacia: " target="_blank" rel="noopener" class="btn-wa mt-7 !px-6 !py-3.5">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+            Ordina su WhatsApp
+          </a>
+          <p class="mt-3 text-sm font-semibold text-muted">WhatsApp <span data-cfg="whatsappLabel"></span></p>
+        </div>
+        <ol class="grid gap-4 sm:grid-cols-3">
+          <li class="rounded-2xl bg-paper p-5">
+            <span class="grid h-10 w-10 place-items-center rounded-full bg-forest-700 font-display text-lg font-semibold text-white">1</span>
+            <p class="mt-4 font-bold">Scrivi cosa ti serve</p>
+            <p class="mt-1 text-sm text-muted">Anche con una foto del prodotto. Ti confermiamo disponibilità e prezzo.</p>
+          </li>
+          <li class="rounded-2xl bg-paper p-5">
+            <span class="grid h-10 w-10 place-items-center rounded-full bg-forest-700 font-display text-lg font-semibold text-white">2</span>
+            <p class="mt-4 font-bold">Paga online</p>
+            <p class="mt-1 text-sm text-muted">Ti inviamo un link di pagamento sicuro, con carta o wallet. Se preferisci, paghi al ritiro.</p>
+          </li>
+          <li class="rounded-2xl bg-paper p-5">
+            <span class="grid h-10 w-10 place-items-center rounded-full bg-forest-700 font-display text-lg font-semibold text-white">3</span>
+            <p class="mt-4 font-bold">Ritira in farmacia</p>
+            <p class="mt-1 text-sm text-muted">Ti avvisiamo quando è pronto: passi, dici il tuo nome e vai.</p>
+          </li>
+          <li class="rounded-2xl border border-line bg-paper/60 p-4 text-sm text-muted sm:col-span-3">
+            <strong class="text-ink">Farmaci:</strong> quelli con ricetta si prenotano dalla sezione <a href="#prenota" class="font-bold text-forest-700 underline underline-offset-2">Prenota ricetta</a> e, come tutti i medicinali, si pagano al ritiro in farmacia, dove il farmacista li consegna con il suo consiglio.
+          </li>
+        </ol>
+      </div>
     </div>
   </div>
 </section>
@@ -620,7 +665,7 @@
     <h2 class="font-display text-2xl font-semibold">Informativa privacy e cookie</h2>
     <div class="mt-4 space-y-3 text-[15px] leading-relaxed text-muted">
       <p><strong class="text-ink">Titolare del trattamento:</strong> <span data-cfg="gestore"></span>, P. IVA <span data-cfg="piva"></span>, sede legale <span data-cfg="sedeLegale"></span>. Contatto: <span data-cfg="email"></span>.</p>
-      <p><strong class="text-ink">Quali dati:</strong> nome, telefono e i codici delle ricette o i prodotti che ci comunichi volontariamente via WhatsApp o email. Questo sito non salva i dati dei moduli: li usi tu per comporre il messaggio.</p>
+      <p><strong class="text-ink">Quali dati:</strong> nome, telefono e i codici delle ricette o i prodotti che ci comunichi volontariamente via WhatsApp o email. I pagamenti online avvengono sulla pagina sicura del fornitore del servizio di pagamento: la farmacia non riceve i dati della tua carta. Questo sito non salva i dati dei moduli: li usi tu per comporre il messaggio.</p>
       <p><strong class="text-ink">Perché:</strong> per preparare i farmaci e i prodotti richiesti e per ricontattarti. Base giuridica: il tuo consenso e l'esecuzione della richiesta (art. 6 e 9 GDPR).</p>
       <p><strong class="text-ink">Per quanto tempo:</strong> il tempo necessario a evadere la richiesta e agli obblighi di legge.</p>
       <p><strong class="text-ink">Cookie:</strong> il sito non usa cookie di profilazione né statistiche. La mappa di Google e i caratteri tipografici sono forniti da servizi esterni; la mappa si carica solo se la richiedi.</p>
@@ -647,10 +692,8 @@ const CONFIG = {
   mapsQuery: "Farmacia Comunale Canegrate, Piazza della Musica 6, 20039 Canegrate MI",
   telefono: "0331 725821",
   /* WhatsApp: numero con prefisso 39, senza spazi né +.
-     Qui c'è il numero fisso della farmacia: funziona SOLO dopo aver attivato
-     WhatsApp Business (gratis) su questo numero. Se usate un cellulare, mettetelo qui.
      Lasciando "" i pulsanti WhatsApp diventano pulsanti "Chiama". */
-  whatsapp: "390331725821",
+  whatsapp: "393534203900",
   email: "",                           // nessuna email pubblica trovata: aggiungila qui (es. una Gmail gratuita)
   apertura: "Aperta dall'8 ottobre 2026",
   turniUrl: "https://www.farmaciediturno.org/comune.asp?cod=15046",
@@ -704,7 +747,7 @@ const SERVIZI = [
   { cat:"prevenzione", icona:"wind",    titolo:"Spirometria", testo:"Valuta la funzionalità respiratoria in pochi minuti.", stato:"presto" },
   { cat:"pratiche", icona:"calendar", titolo:"Prenotazione visite ed esami (CUP)", testo:"Prenotiamo per te visite ed esami del Servizio sanitario regionale.", stato:"attivo" },
   { cat:"pratiche", icona:"truck",    titolo:"Consegna a domicilio", testo:"Per chi non può muoversi: portiamo farmaci e prodotti a casa.", stato:"attivo" },
-  { cat:"pratiche", icona:"file",     titolo:"Ordini da ritirare in farmacia", testo:"Ordina via WhatsApp o dal sito e passa a ritirare quando è pronto.", stato:"attivo" },
+  { cat:"pratiche", icona:"file",     titolo:"Ordina su WhatsApp, ritira in farmacia", testo:"Scrivici cosa ti serve, paga online con il link che ti inviamo e passa a ritirare.", stato:"attivo" },
   { cat:"pratiche", icona:"user",     titolo:"Scelta e revoca del medico", testo:"Cambia il medico di famiglia senza andare agli sportelli ASST.", stato:"presto" }
 ];
 
@@ -721,6 +764,7 @@ const FAQ = [
   ["Devo prenotare per glicemia o pressione?", "No, le misurazioni rapide si fanno al bancone negli orari di apertura. Per ECG, Holter ed emoglobina glicata è meglio prenotare."],
   ["L'ECG in farmacia è gratuito?", "Dipende. In Lombardia ECG e Holter in farmacia sono gratuiti per chi rientra nei requisiti regionali, per esempio con esenzione per patologia cardiovascolare e prescrizione del medico. Negli altri casi sono a pagamento: chiedici la tariffa."],
   ["Se il farmaco non c'è, quanto tempo serve?", "Di solito lo ordiniamo e arriva entro il giorno lavorativo successivo. Ti scriviamo su WhatsApp appena è pronto."],
+  ["Come funziona l'ordine su WhatsApp?", "Scrivici cosa ti serve: ti confermiamo disponibilità e prezzo e ti inviamo un link per pagare online. Quando l'ordine è pronto ti avvisiamo e passi a ritirarlo in farmacia. I farmaci si pagano al momento del ritiro."],
   ["Fate consegne a domicilio?", "Sì, per chi ha difficoltà a muoversi. Scrivici o chiamaci per accordarci su giorno e orario."],
   ["C'è parcheggio?", "Sì, c'è un parcheggio gratuito vicino alla farmacia, anche con posti accessibili in carrozzina."],
   ["Dove trovo la farmacia di turno?", "Usa il pulsante «Farmacie di turno» in questa pagina o l'app Farmacia Aperta. In caso di emergenza chiama il 112."]
@@ -993,7 +1037,7 @@ function setupRxForm(){
     } else {
       const p = f.prodotto.value.trim();
       if (!p) return showErr(err, "Scrivici quale prodotto ti serve.");
-      corpo = `Prodotto richiesto: ${p}`;
+      corpo = `Prodotto richiesto: ${p}` + (f.pagaOnline.checked ? "\nVorrei pagare online: mandatemi il link di pagamento." : "\nPago al ritiro.");
     }
     if (!$("#rxPrivacy").checked) return showErr(err, "Per continuare accetta l'informativa privacy.");
     showErr(err, "");
