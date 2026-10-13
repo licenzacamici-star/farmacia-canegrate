@@ -1,0 +1,8 @@
+Metti qui le tue foto con questi nomi esatti (minuscolo, .jpg):
+  negozio.jpg  -> foto grande in apertura (interno farmacia)
+  team.jpg     -> sezione "Chi siamo" (staff al bancone)
+  vetrina.jpg  -> sezione distributore (vetrina, insegna, porticato)
+  staff-1.jpg, staff-2.jpg, staff-3.jpg -> ritratti del team
+Consigli: JPG orizzontale, lato lungo 1600 px, peso < 400 KB (comprimi gratis su squoosh.app).
+Finché una foto manca, il sito mostra in automatico una foto di esempio.
+Per vedere dove va ogni foto apri il sito aggiungendo ?foto=1 all'indirizzo.
