@@ -22,6 +22,9 @@
      ===================================================================== -->
 <title>Farmacia Comunale Canegrate · Quartiere Cascinette | Ricette, autoanalisi, ECG</title>
 <meta name="description" content="Farmacia Comunale di Canegrate, quartiere Cascinette. Prenota la ricetta su WhatsApp, autoanalisi (glicemia, colesterolo, pressione), ECG e Holter, dermocosmesi, infanzia, veterinaria, fitoterapia. Vicina a Legnano.">
+<link rel="canonical" href="https://www.gruppofarmapoint.it/">
+<meta property="og:url" content="https://www.gruppofarmapoint.it/">
+<meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0E4D3F">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Farmacia Comunale Canegrate · Quartiere Cascinette">
@@ -34,46 +37,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<!-- Tailwind CSS v4 via CDN gratuito (jsDelivr) -->
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.1.18/dist/index.global.js"></script>
-<style type="text/tailwindcss">
-  @theme {
-    --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
-    --font-display: "Fraunces", Georgia, serif;
-    --color-ink: #10241E;
-    --color-muted: #4B5F58;
-    --color-cream: #F7F5EF;
-    --color-paper: #FFFFFF;
-    --color-line: #E3E0D6;
-    --color-forest-50: #EAF5EF;
-    --color-forest-100: #D3EBDD;
-    --color-forest-500: #23985C;
-    --color-forest-600: #1C7D4C;
-    --color-forest-700: #0E4D3F;
-    --color-forest-900: #0A2F27;
-    --color-cross: #34C27A;
-    --color-sun: #F4B740;
-    --color-coral: #E2674A;
-  }
-  /* Classi riutilizzabili (Tailwind v4: @utility) */
-  @utility btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-[15px] font-bold transition active:scale-[.98] focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-forest-500; }
-  @utility btn-primary { @apply btn bg-forest-700 text-white hover:bg-forest-900; }
-  @utility btn-wa { @apply btn bg-forest-500 text-white hover:bg-forest-600; }
-  @utility btn-ghost { @apply btn border border-line bg-paper text-ink hover:border-forest-500 hover:text-forest-700; }
-  @utility eyebrow { @apply inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[.16em] text-forest-600; }
-  @utility h2 { @apply font-display text-3xl leading-tight font-semibold text-ink sm:text-[42px]; }
-  @utility card { @apply rounded-3xl border border-line bg-paper; }
-  @utility field { @apply w-full rounded-xl border border-line bg-cream px-4 py-3 text-[15px] text-ink placeholder:text-muted/60 focus:border-forest-500 focus:bg-paper focus:outline-none focus:ring-4 focus:ring-forest-100; }
-  @utility label { @apply mb-1.5 block text-sm font-bold text-ink; }
-  @utility chip {
-    @apply rounded-full border border-line bg-paper px-4 py-2 text-sm font-bold text-muted transition hover:border-forest-500 hover:text-forest-700;
-    &[aria-pressed="true"] { @apply border-forest-700 bg-forest-700 text-white; }
-  }
-  @utility navlink {
-    @apply rounded-full px-3 py-2 text-[15px] font-semibold text-muted transition hover:text-forest-700;
-    &.is-active { @apply bg-forest-50 text-forest-700; }
-  }
-</style>
+<!-- Stile compilato una sola volta (prima veniva generato nel browser a ogni visita) -->
+<link rel="stylesheet" href="styles.css">
 <style>
   /* Stili base (funzionano anche prima che Tailwind sia caricato) */
   html { -webkit-text-size-adjust: 100%; }
