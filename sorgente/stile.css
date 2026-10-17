@@ -73,3 +73,10 @@
 /* Modalità anteprima foto (?foto=1) */
 .foto-mode [data-foto] { outline: 3px dashed #E2674A; outline-offset: -3px; position: relative; }
 .foto-mode [data-foto]::after { content: "📷 " attr(data-foto); position: absolute; left: 10px; top: 10px; background: #E2674A; color: #fff; font: 700 12px/1 Manrope, sans-serif; padding: 6px 9px; border-radius: 999px; z-index: 5; }
+
+/* Bigliettino di benvenuto (assets/site.js → setupHello) */
+.hello-card { opacity: 0; transform: translateY(16px) scale(.98); transition: opacity .35s ease, transform .45s cubic-bezier(.2,.9,.3,1.2); }
+.hello-card.in { opacity: 1; transform: none; }
+.hello-card.in .hello-ico { animation: hello-wave 1.2s ease .3s 1; }
+@keyframes hello-wave { 0%,100% { transform: rotate(0) } 25% { transform: rotate(-10deg) } 50% { transform: rotate(8deg) } 75% { transform: rotate(-4deg) } }
+@media (prefers-reduced-motion: reduce) { .hello-card, .hello-card.in .hello-ico { transition: none; animation: none; } }

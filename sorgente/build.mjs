@@ -169,13 +169,32 @@ const isActive = (href, cur) => href === "/" ? cur === "/" : cur.startsWith(href
 
 const header = cur => `
 <a href="#contenuto" class="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[100] focus:rounded-lg focus:bg-paper focus:px-4 focus:py-2">Vai al contenuto</a>
-<div class="bg-forest-900 text-[13px] text-forest-100">
-  <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6">
-    <p class="truncate"><span class="font-bold text-cross">Nuova apertura</span> · ${esc(C.apertura)} nel quartiere ${esc(C.quartiere)}</p>
+<div class="relative z-[60] bg-forest-900 text-[13px] text-forest-100">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-2 sm:px-6">
+    <p class="min-w-0 truncate"><span class="font-bold text-cross">Nuova apertura</span> · ${esc(C.apertura)} nel quartiere ${esc(C.quartiere)}</p>
     <div class="hidden items-center gap-5 md:flex">
       <a href="${TEL}" data-href="tel" class="hover:text-white">Tel. ${esc(C.telefono)}</a>
       <a href="/orari-e-dove-siamo/" class="flex items-center gap-2 hover:text-white"><span class="status-dot h-2 w-2 rounded-full bg-cross"></span><span class="status-short">${esc(orariFrase())}</span></a>
     </div>
+    <div class="relative shrink-0">
+        <button id="langBtn" type="button" class="-my-1 inline-flex items-center gap-1.5 rounded-full border border-white/20 px-2.5 py-1 font-bold text-white hover:bg-white/10" aria-expanded="false" aria-controls="langMenu" aria-haspopup="true" aria-label="Traduci la pagina · Translate this page" title="Traduci · Translate">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span>Lingua · Language</span>
+        </button>
+        <div id="langMenu" role="menu" aria-label="Lingua" class="absolute right-0 top-full z-[70] mt-3 hidden max-h-[70vh] w-60 overflow-auto rounded-2xl border border-line bg-paper p-2 shadow-[0_24px_50px_-20px_rgba(14,77,63,.45)]">
+          <p class="px-3 pb-2 pt-1 text-xs font-extrabold uppercase tracking-[.14em] text-forest-600">Traduci · Translate</p>
+          <a role="menuitem" data-lang="en" lang="en" href="https://translate.google.com/translate?sl=it&amp;tl=en" rel="noopener" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-[15px] font-semibold text-ink hover:bg-forest-50"><span>English</span><span class="text-xs font-bold uppercase text-muted">en</span></a>
+          <a role="menuitem" data-lang="es" lang="es" href="https://translate.google.com/translate?sl=it&amp;tl=es" rel="noopener" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-[15px] font-semibold text-ink hover:bg-forest-50"><span>Español</span><span class="text-xs font-bold uppercase text-muted">es</span></a>
+          <a role="menuitem" data-lang="fr" lang="fr" href="https://translate.google.com/translate?sl=it&amp;tl=fr" rel="noopener" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-[15px] font-semibold text-ink hover:bg-forest-50"><span>Français</span><span class="text-xs font-bold uppercase text-muted">fr</span></a>
+          <a role="menuitem" data-lang="de" lang="de" href="https://translate.google.com/translate?sl=it&amp;tl=de" rel="noopener" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-[15px] font-semibold text-ink hover:bg-forest-50"><span>Deutsch</span><span class="text-xs font-bold uppercase text-muted">de</span></a>
+          <a role="menuitem" data-lang="ro" lang="ro" href="https://translate.google.com/translate?sl=it&amp;tl=ro" rel="noopener" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-[15px] font-semibold text-ink hover:bg-forest-50"><span>Română</span><span class="text-xs font-bold uppercase text-muted">ro</span></a>
+          <a role="menuitem" data-lang="sq" lang="sq" href="https://translate.google.com/translate?sl=it&amp;tl=sq" rel="noopener" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-[15px] font-semibold text-ink hover:bg-forest-50"><span>Shqip</span><span class="text-xs font-bold uppercase text-muted">sq</span></a>
+          <a role="menuitem" data-lang="uk" lang="uk" href="https://translate.google.com/translate?sl=it&amp;tl=uk" rel="noopener" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-[15px] font-semibold text-ink hover:bg-forest-50"><span>Українська</span><span class="text-xs font-bold uppercase text-muted">uk</span></a>
+          <a role="menuitem" data-lang="ar" lang="ar" href="https://translate.google.com/translate?sl=it&amp;tl=ar" rel="noopener" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-[15px] font-semibold text-ink hover:bg-forest-50"><span dir="rtl">العربية</span><span class="text-xs font-bold uppercase text-muted">ar</span></a>
+          <a role="menuitem" data-lang="zh-CN" lang="zh-CN" href="https://translate.google.com/translate?sl=it&amp;tl=zh-CN" rel="noopener" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-[15px] font-semibold text-ink hover:bg-forest-50"><span>中文</span><span class="text-xs font-bold uppercase text-muted">zh</span></a>
+          <a role="menuitem" data-lang="ur" lang="ur" href="https://translate.google.com/translate?sl=it&amp;tl=ur" rel="noopener" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-[15px] font-semibold text-ink hover:bg-forest-50"><span dir="rtl">اردو</span><span class="text-xs font-bold uppercase text-muted">ur</span></a>
+          <p class="mt-1 border-t border-line px-3 pt-2 text-[11px] leading-snug text-muted">Traduzione automatica di Google Traduttore: per informazioni sui farmaci chiedi sempre al farmacista.</p>
+        </div>
+      </div>
   </div>
 </div>
 <header class="sticky top-0 z-50 border-b border-line/70 bg-cream/85 backdrop-blur-md">
@@ -247,7 +266,7 @@ const footer = () => `
       </ul>
     </div>
   </div>
-  <p class="mx-auto mt-10 max-w-7xl px-4 text-xs text-forest-100/60 sm:px-6">© <span class="year">${new Date().getFullYear()}</span> ${esc(C.nome)}. Le informazioni del sito non sostituiscono il parere del medico. Alcune foto di esempio: Unsplash. Stemma del Comune di Canegrate: <a href="https://commons.wikimedia.org/wiki/File:Canegrate-Stemma.svg" target="_blank" rel="noopener" class="underline hover:text-white">Arrow303 via Wikimedia Commons</a>, licenza <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.it" target="_blank" rel="noopener" class="underline hover:text-white">CC BY-SA 4.0</a>.</p>
+  <p class="mx-auto mt-10 max-w-7xl px-4 text-xs text-forest-100/60 sm:px-6">© <span class="year">${new Date().getFullYear()}</span> ${esc(C.nome)}. Le informazioni del sito non sostituiscono il parere del medico. Foto di esempio: cottonbro studio su Pexels e Unsplash. Stemma del Comune di Canegrate: <a href="https://commons.wikimedia.org/wiki/File:Canegrate-Stemma.svg" target="_blank" rel="noopener" class="underline hover:text-white">Arrow303 via Wikimedia Commons</a>, licenza <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.it" target="_blank" rel="noopener" class="underline hover:text-white">CC BY-SA 4.0</a>.</p>
 </footer>
 
 <nav class="fixed inset-x-3 bottom-3 z-40 grid grid-cols-3 gap-2 rounded-2xl border border-line bg-paper/95 p-2 shadow-2xl backdrop-blur lg:hidden" aria-label="Azioni rapide">
@@ -391,7 +410,7 @@ const layout = p => {
   const ld = [...(p.schema || [])];
   if (p.crumbs) ld.push(crumbsLd(p.crumbs));
   const url = SITE + p.path;
-  const og = p.ogImage || SITE + "/foto/negozio.jpg";
+  const og = p.ogImage || "https://images.pexels.com/photos/8657366/pexels-photo-8657366.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop";
   return `<!doctype html>
 <html lang="it">
 <head>
@@ -483,9 +502,9 @@ add({
     <div class="relative">
       <div class="absolute -right-24 -top-16 h-80 w-80 rounded-full bg-forest-100/70 blur-3xl" aria-hidden="true"></div>
       <figure class="relative overflow-hidden rounded-[32px] bg-forest-100 shadow-[0_30px_60px_-30px_rgba(14,77,63,.45)]" data-foto="foto/negozio.jpg">
-        <img class="aspect-[4/3] w-full object-cover sm:aspect-square lg:aspect-[4/5]" src="/foto/negozio.jpg"
-             data-fallback="https://images.unsplash.com/photo-1576602976047-174e57a47881?w=1200&q=75&auto=format"
-             alt="Interno della Farmacia Comunale di Canegrate, quartiere Cascinette" width="960" height="1200" fetchpriority="high">
+        <img class="aspect-[4/3] w-full object-cover object-[0%_50%] sm:aspect-square lg:aspect-[4/5]" src="https://images.pexels.com/photos/8657366/pexels-photo-8657366.jpeg?auto=compress&cs=tinysrgb&w=1200"
+             data-fallback="https://images.pexels.com/photos/8657366/pexels-photo-8657366.jpeg?auto=compress&cs=tinysrgb&w=1200"
+             alt="Farmacista sorridente che consiglia una cliente su un prodotto" width="960" height="1200" fetchpriority="high">
       </figure>
       <a href="/servizi/elettrocardiogramma-ecg/" class="absolute -bottom-6 left-4 right-4 block rounded-2xl border border-line bg-paper/95 p-4 shadow-xl backdrop-blur hover:border-forest-500 sm:left-auto sm:right-6 sm:w-72">
         <span class="flex items-center gap-3">
@@ -605,9 +624,9 @@ add({
 <section class="pb-20 lg:pb-28">
   <div class="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-16">
     <figure class="reveal relative overflow-hidden rounded-[32px] bg-forest-100" data-foto="foto/team.jpg">
-      <img class="aspect-[4/3] h-full w-full object-cover" loading="lazy" src="/foto/team.jpg"
-           data-fallback="https://images.unsplash.com/photo-1576091358783-a212ec293ff3?w=1200&q=75&auto=format"
-           alt="I farmacisti della Farmacia Comunale di Canegrate al bancone" width="1200" height="900">
+      <img class="aspect-[4/3] h-full w-full object-cover" loading="lazy" src="https://images.pexels.com/photos/8657369/pexels-photo-8657369.jpeg?auto=compress&cs=tinysrgb&w=1200"
+           data-fallback="https://images.pexels.com/photos/8657369/pexels-photo-8657369.jpeg?auto=compress&cs=tinysrgb&w=1200"
+           alt="Cliente sorridente al bancone della farmacia mentre il farmacista la consiglia" width="1200" height="900">
     </figure>
     <div class="reveal">
       <p class="eyebrow"><span class="h-px w-6 bg-forest-500"></span>Chi siamo</p>
@@ -1083,9 +1102,9 @@ ${pageHero({ eyebrow: "Ordina e ritira", h1: "Ordina su WhatsApp, paga online, r
       </ul>
     </div>
     <figure class="relative h-full min-h-72 bg-forest-100" data-foto="foto/vetrina.jpg">
-      <img class="absolute inset-0 h-full w-full object-cover" loading="lazy" src="/foto/vetrina.jpg"
-           data-fallback="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?w=1100&q=75&auto=format"
-           alt="Vetrina e insegna della Farmacia Comunale di Canegrate sotto il porticato" width="1100" height="700">
+      <img class="absolute inset-0 h-full w-full object-cover object-[60%_40%]" loading="lazy" src="https://images.pexels.com/photos/8657374/pexels-photo-8657374.jpeg?auto=compress&cs=tinysrgb&w=1100"
+           data-fallback="https://images.pexels.com/photos/8657374/pexels-photo-8657374.jpeg?auto=compress&cs=tinysrgb&w=1100"
+           alt="Farmacista che mostra un prodotto a una cliente" width="1100" height="700">
     </figure>
   </div>
 </section>
@@ -1137,9 +1156,9 @@ add({
       </dl>
     </div>
     <figure class="relative overflow-hidden rounded-[32px] bg-forest-100" data-foto="foto/team.jpg">
-      <img class="aspect-[4/3] h-full w-full object-cover" src="/foto/team.jpg"
-           data-fallback="https://images.unsplash.com/photo-1576091358783-a212ec293ff3?w=1200&q=75&auto=format"
-           alt="Il team della Farmacia Comunale di Canegrate al bancone" width="1200" height="900">
+      <img class="aspect-[4/3] h-full w-full object-cover object-[50%_55%]" src="https://images.pexels.com/photos/8657299/pexels-photo-8657299.jpeg?auto=compress&cs=tinysrgb&w=1200"
+           data-fallback="https://images.pexels.com/photos/8657299/pexels-photo-8657299.jpeg?auto=compress&cs=tinysrgb&w=1200"
+           alt="Due farmacisti in camice dietro il bancone" width="1200" height="900">
     </figure>
   </div>
 </section>
