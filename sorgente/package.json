@@ -1,0 +1,12 @@
+{
+  "name": "farmacia-canegrate-sito",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs && tailwindcss -i stile.css -o ../styles.css --minify"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.1.18",
+    "tailwindcss": "4.1.18"
+  }
+}
