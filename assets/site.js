@@ -234,6 +234,74 @@ function setupUI(){
   $$(".reveal").forEach(el => rv.observe(el));
 }
 
+/* ---------- Pulsante traduzione (Google Traduttore) ---------- */
+function setupLang(){
+  const btn = $("#langBtn"), menu = $("#langMenu");
+  if (!btn || !menu) return;
+  if (/translate\.goog$/.test(location.hostname)) { btn.parentElement.remove(); return; }
+  $$("[data-lang]", menu).forEach(a => a.href = `https://translate.google.com/translate?sl=it&tl=${a.dataset.lang}&u=${encodeURIComponent(location.href.split("#")[0])}`);
+  const close = () => { menu.classList.add("hidden"); btn.setAttribute("aria-expanded","false"); };
+  btn.addEventListener("click", e => {
+    e.stopPropagation();
+    const open = menu.classList.toggle("hidden") === false;
+    btn.setAttribute("aria-expanded", String(open));
+    if (open) { $("#mobileNav")?.classList.add("hidden"); $("#menuBtn")?.setAttribute("aria-expanded","false"); }
+  });
+  document.addEventListener("click", e => { if (!menu.contains(e.target)) close(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
+}
+
+/* ---------- Bigliettino di benvenuto (1 volta al giorno, si chiude con la X) ---------- */
+function setupHello(){
+  const KEY = "fc-ciao", path = location.pathname;
+  let seen = null;
+  try { seen = localStorage.getItem(KEY); } catch(e) {}
+  const st = computeStatus(), today = iso(st.date);
+  if (seen === today || /translate\.goog$/.test(location.hostname)) return;
+  if (path.startsWith("/privacy")) return;
+  const { min } = romeNow();
+  const saluto = min < 300 ? "Buonanotte" : min < 720 ? "Buongiorno" : min < 1080 ? "Buon pomeriggio" : min < 1350 ? "Buonasera" : "Buonanotte";
+  const notte = min < 360 || min >= 1170;
+  const ico = notte
+    ? '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/>'
+    : '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+  let titolo, testo, cta;
+  if (st.today.turno && st.open) {
+    titolo = `Oggi siamo noi di turno`; testo = `Siamo aperti, ${st.msg}. Scrivici prima e ti prepariamo tutto.`;
+    cta = [waLink("Buongiorno, vorrei prenotare dei farmaci."), "Scrivici su WhatsApp", true];
+  } else if (st.open) {
+    titolo = `Siamo aperti, ${st.msg}`; testo = "Mandaci la ricetta su WhatsApp: la prepariamo noi e ti avvisiamo quando è pronta.";
+    cta = ["/prenota-ricetta/", "Prenota la ricetta", false];
+  } else {
+    titolo = `Ora siamo chiusi, ${st.msg}`; testo = "Ti serve un farmaco adesso? Guarda chi è di turno qui vicino.";
+    cta = ["/farmacia-di-turno/", "Farmacia di turno", false];
+  }
+  if (path.startsWith(cta[0])) cta = st.open ? ["/servizi/", "Scopri i servizi", false] : ["/prenota-ricetta/", "Prenota per dopo", false];
+  const box = document.createElement("aside");
+  box.setAttribute("aria-label", "Messaggio della farmacia");
+  box.className = "hello-card fixed inset-x-3 bottom-[92px] z-[45] sm:inset-x-auto sm:left-6 sm:w-[340px] lg:left-auto lg:right-6 lg:bottom-[100px]";
+  box.innerHTML = `
+    <div class="relative overflow-hidden rounded-3xl border border-line bg-paper p-3.5 pr-10 sm:p-4 sm:pr-11 shadow-[0_24px_60px_-24px_rgba(14,77,63,.55)]">
+      <div class="pointer-events-none absolute -right-10 -top-12 h-32 w-32 rounded-full ${notte ? "bg-forest-100" : "bg-sun/25"} blur-2xl" aria-hidden="true"></div>
+      <button type="button" class="hello-x absolute right-2.5 top-2.5 grid h-8 w-8 place-items-center rounded-full text-muted hover:bg-forest-50 hover:text-ink" aria-label="Chiudi"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      <div class="relative flex gap-3">
+        <span class="hello-ico grid h-10 w-10 shrink-0 place-items-center rounded-2xl ${notte ? "bg-forest-900 text-sun" : "bg-sun/20 text-[#B7791F]"}"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ico}</svg></span>
+        <div class="min-w-0">
+          <p class="text-xs font-extrabold uppercase tracking-[.14em] text-forest-600">${saluto}!</p>
+          <p class="mt-0.5 font-display text-base font-semibold leading-snug text-ink">${esc(titolo)}</p>
+          <p class="mt-1 text-[13px] leading-snug text-muted sm:text-sm">${esc(testo)}</p>
+          <a href="${cta[0]}"${cta[2] ? ' target="_blank" rel="noopener"' : ""} class="hello-go mt-2.5 inline-flex items-center gap-1.5 rounded-full bg-forest-700 px-3.5 py-1.5 text-[13px] sm:text-sm font-bold text-white hover:bg-forest-900">${esc(cta[1])}<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+    </div>`;
+  const remember = () => { try { localStorage.setItem(KEY, today); } catch(e) {} };
+  const hide = () => { box.classList.remove("in"); remember(); setTimeout(() => box.remove(), 400); };
+  box.querySelector(".hello-x").addEventListener("click", hide);
+  box.querySelector(".hello-go").addEventListener("click", remember);
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && box.isConnected) hide(); });
+  setTimeout(() => { document.body.appendChild(box); requestAnimationFrame(() => requestAnimationFrame(() => box.classList.add("in"))); }, 3000);
+}
+
 bindConfig();
 setupPhotos();
 renderHours();
@@ -242,4 +310,6 @@ setupFilter();
 setupRxForm();
 setupMsgForm();
 setupUI();
+setupLang();
+setupHello();
 })();
