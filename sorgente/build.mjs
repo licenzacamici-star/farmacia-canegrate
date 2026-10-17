@@ -83,6 +83,9 @@ const SERVIZI = [
   { cat: "pratiche", icona: "user", titolo: "Scelta e revoca del medico di base", testo: "Scegli o cambi il medico di famiglia o il pediatra direttamente in farmacia, senza andare agli sportelli ASST.", stato: "attivo", url: "/servizi/scelta-revoca-medico/" }
 ];
 
+/* Servizi mostrati in home (in quest'ordine) */
+const HOME_SERVIZI = ["Scelta e revoca del medico di base", "Glicemia", "Misurazione della pressione", "Elettrocardiogramma (ECG)", "Holter cardiaco 24h", "Prenotazione visite ed esami (CUP)"];
+
 const REPARTI = [
   { id: "dermocosmesi", titolo: "Dermocosmesi", testo: "Viso, corpo, solari. Consulenza sulla tua pelle.", img: "photo-1620916297397-a4a5402a3c6c",
     lungo: `<p>Detergenti, creme viso e corpo, prodotti per pelli sensibili, secche, impure o con tendenza all'arrossamento, solari per adulti e bambini. Ti aiutiamo a scegliere in base al tuo tipo di pelle e a quello che stai già usando, senza farti comprare più del necessario.</p><p>Se hai un problema della pelle che non migliora, ti consigliamo di parlarne con il medico o con il dermatologo: in farmacia possiamo affiancarti con i prodotti adatti alla terapia.</p>` },
@@ -128,7 +131,7 @@ const PHARMACY = {
   url: SITE + "/",
   telephone: TEL_INTL,
   ...(C.email ? { email: C.email } : {}),
-  image: [SITE + "/foto/negozio.jpg", SITE + "/foto/vetrina.jpg", SITE + "/foto/team.jpg"],
+  image: [SITE + "/foto/og.jpg", SITE + "/foto/vetrina.jpg", SITE + "/foto/team.jpg"],
   logo: SITE + "/assets/logo.svg",
   address: { "@type": "PostalAddress", streetAddress: C.via, addressLocality: C.citta, postalCode: C.cap, addressRegion: C.provincia, addressCountry: "IT" },
   hasMap: MAPS,
@@ -266,7 +269,7 @@ const footer = () => `
       </ul>
     </div>
   </div>
-  <p class="mx-auto mt-10 max-w-7xl px-4 text-xs text-forest-100/60 sm:px-6">© <span class="year">${new Date().getFullYear()}</span> ${esc(C.nome)}. Le informazioni del sito non sostituiscono il parere del medico. Foto di esempio: cottonbro studio su Pexels e Unsplash. Stemma del Comune di Canegrate: <a href="https://commons.wikimedia.org/wiki/File:Canegrate-Stemma.svg" target="_blank" rel="noopener" class="underline hover:text-white">Arrow303 via Wikimedia Commons</a>, licenza <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.it" target="_blank" rel="noopener" class="underline hover:text-white">CC BY-SA 4.0</a>.</p>
+  <p class="mx-auto mt-10 max-w-7xl px-4 text-xs text-forest-100/60 sm:px-6">© <span class="year">${new Date().getFullYear()}</span> ${esc(C.nome)}. Le informazioni del sito non sostituiscono il parere del medico. Alcune foto di esempio: Unsplash. Stemma del Comune di Canegrate: <a href="https://commons.wikimedia.org/wiki/File:Canegrate-Stemma.svg" target="_blank" rel="noopener" class="underline hover:text-white">Arrow303 via Wikimedia Commons</a>, licenza <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.it" target="_blank" rel="noopener" class="underline hover:text-white">CC BY-SA 4.0</a>.</p>
 </footer>
 
 <nav class="fixed inset-x-3 bottom-3 z-40 grid grid-cols-3 gap-2 rounded-2xl border border-line bg-paper/95 p-2 shadow-2xl backdrop-blur lg:hidden" aria-label="Azioni rapide">
@@ -410,7 +413,7 @@ const layout = p => {
   const ld = [...(p.schema || [])];
   if (p.crumbs) ld.push(crumbsLd(p.crumbs));
   const url = SITE + p.path;
-  const og = p.ogImage || "https://images.pexels.com/photos/8657366/pexels-photo-8657366.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop";
+  const og = p.ogImage || SITE + "/foto/og.jpg";
   return `<!doctype html>
 <html lang="it">
 <head>
@@ -429,6 +432,7 @@ const layout = p => {
 <meta property="og:title" content="${esc(p.ogTitle || p.title)}">
 <meta property="og:description" content="${esc(p.description)}">
 <meta property="og:image" content="${og}">
+${p.ogImage ? "" : `<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">`}
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/logo.svg">
@@ -436,6 +440,7 @@ const layout = p => {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css?v=${VER}">
+${p.path === "/" ? `<link rel="preload" as="image" href="/foto/negozio.webp" imagesrcset="/foto/negozio-480.webp 480w, /foto/negozio.webp 793w" imagesizes="(min-width: 1024px) 40vw, (min-width: 640px) 90vw, 100vw" fetchpriority="high">` : ""}
 <script>document.documentElement.classList.add("js")</script>
 ${ld.map(o => `<script type="application/ld+json">${JSON.stringify(o)}</script>`).join("\n")}
 </head>
@@ -502,9 +507,10 @@ add({
     <div class="relative">
       <div class="absolute -right-24 -top-16 h-80 w-80 rounded-full bg-forest-100/70 blur-3xl" aria-hidden="true"></div>
       <figure class="relative overflow-hidden rounded-[32px] bg-forest-100 shadow-[0_30px_60px_-30px_rgba(14,77,63,.45)]" data-foto="foto/negozio.jpg">
-        <img class="aspect-[4/3] w-full object-cover object-[0%_50%] sm:aspect-square lg:aspect-[4/5]" src="https://images.pexels.com/photos/8657366/pexels-photo-8657366.jpeg?auto=compress&cs=tinysrgb&w=1200"
-             data-fallback="https://images.pexels.com/photos/8657366/pexels-photo-8657366.jpeg?auto=compress&cs=tinysrgb&w=1200"
-             alt="Farmacista sorridente che consiglia una cliente su un prodotto" width="960" height="1200" fetchpriority="high">
+        <img class="aspect-[4/3] w-full object-cover object-[50%_28%] sm:aspect-square lg:aspect-[4/5]" src="/foto/negozio.webp"
+             srcset="/foto/negozio-480.webp 480w, /foto/negozio.webp 793w" sizes="(min-width: 1024px) 40vw, (min-width: 640px) 90vw, 100vw"
+             data-fallback="/foto/negozio.jpg"
+             alt="Farmacista sorridente in camice bianco tra gli scaffali della farmacia" width="793" height="793" fetchpriority="high" decoding="async">
       </figure>
       <a href="/servizi/elettrocardiogramma-ecg/" class="absolute -bottom-6 left-4 right-4 block rounded-2xl border border-line bg-paper/95 p-4 shadow-xl backdrop-blur hover:border-forest-500 sm:left-auto sm:right-6 sm:w-72">
         <span class="flex items-center gap-3">
@@ -543,7 +549,7 @@ add({
       <a href="/servizi/" class="btn-ghost reveal self-start lg:self-auto">Tutti i servizi ${icon("arrow", "h-4 w-4")}</a>
     </div>
     <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      ${SERVIZI.filter(s => s.url && s.stato !== "presto" && s.titolo !== "Colesterolo e trigliceridi").slice(0, 6).map(serviceCard).join("\n      ")}
+      ${HOME_SERVIZI.map(t => SERVIZI.find(s => s.titolo === t)).filter(Boolean).map(serviceCard).join("\n      ")}
     </div>
 
     <div class="reveal mt-14 overflow-hidden rounded-[32px] bg-forest-700 text-white">
@@ -624,9 +630,10 @@ add({
 <section class="pb-20 lg:pb-28">
   <div class="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-16">
     <figure class="reveal relative overflow-hidden rounded-[32px] bg-forest-100" data-foto="foto/team.jpg">
-      <img class="aspect-[4/3] h-full w-full object-cover" loading="lazy" src="https://images.pexels.com/photos/8657369/pexels-photo-8657369.jpeg?auto=compress&cs=tinysrgb&w=1200"
-           data-fallback="https://images.pexels.com/photos/8657369/pexels-photo-8657369.jpeg?auto=compress&cs=tinysrgb&w=1200"
-           alt="Cliente sorridente al bancone della farmacia mentre il farmacista la consiglia" width="1200" height="900">
+      <img class="aspect-[4/3] h-full w-full object-cover" loading="lazy" decoding="async" src="/foto/team.webp"
+           srcset="/foto/team-640.webp 640w, /foto/team.webp 1057w" sizes="(min-width: 1024px) 45vw, 100vw"
+           data-fallback="/foto/team.jpg"
+           alt="Scaffali luminosi con prodotti per la cura della persona e piante" width="1057" height="793">
     </figure>
     <div class="reveal">
       <p class="eyebrow"><span class="h-px w-6 bg-forest-500"></span>Chi siamo</p>
@@ -1102,9 +1109,10 @@ ${pageHero({ eyebrow: "Ordina e ritira", h1: "Ordina su WhatsApp, paga online, r
       </ul>
     </div>
     <figure class="relative h-full min-h-72 bg-forest-100" data-foto="foto/vetrina.jpg">
-      <img class="absolute inset-0 h-full w-full object-cover object-[60%_40%]" loading="lazy" src="https://images.pexels.com/photos/8657374/pexels-photo-8657374.jpeg?auto=compress&cs=tinysrgb&w=1100"
-           data-fallback="https://images.pexels.com/photos/8657374/pexels-photo-8657374.jpeg?auto=compress&cs=tinysrgb&w=1100"
-           alt="Farmacista che mostra un prodotto a una cliente" width="1100" height="700">
+      <img class="absolute inset-0 h-full w-full object-cover object-[45%_50%]" loading="lazy" decoding="async" src="/foto/vetrina.webp"
+           srcset="/foto/vetrina-800.webp 800w, /foto/vetrina.webp 1983w" sizes="(min-width: 1024px) 50vw, 100vw"
+           data-fallback="/foto/vetrina.jpg"
+           alt="Interno luminoso di una farmacia con scaffali in legno chiaro" width="1983" height="793">
     </figure>
   </div>
 </section>
@@ -1156,9 +1164,10 @@ add({
       </dl>
     </div>
     <figure class="relative overflow-hidden rounded-[32px] bg-forest-100" data-foto="foto/team.jpg">
-      <img class="aspect-[4/3] h-full w-full object-cover object-[50%_55%]" src="https://images.pexels.com/photos/8657299/pexels-photo-8657299.jpeg?auto=compress&cs=tinysrgb&w=1200"
-           data-fallback="https://images.pexels.com/photos/8657299/pexels-photo-8657299.jpeg?auto=compress&cs=tinysrgb&w=1200"
-           alt="Due farmacisti in camice dietro il bancone" width="1200" height="900">
+      <img class="aspect-[4/3] h-full w-full object-cover object-[60%_30%]" decoding="async" src="/foto/chi-siamo.webp"
+           srcset="/foto/chi-siamo-640.webp 640w, /foto/chi-siamo.webp 1057w" sizes="(min-width: 1024px) 45vw, 100vw"
+           data-fallback="/foto/chi-siamo.jpg"
+           alt="Farmacista sorridente con le braccia incrociate in farmacia" width="1057" height="793">
     </figure>
   </div>
 </section>
