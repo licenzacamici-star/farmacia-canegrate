@@ -56,6 +56,7 @@ const ICONS = {
   alert: '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/>'
 };
 const icon = (k, cls = "h-5 w-5") => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k] || ""}</svg>`;
+const STEMMA = cls => `<img src="/assets/stemma-canegrate.webp" alt="Stemma del Comune di Canegrate" width="125" height="160" class="${cls}">`;
 const CROSS = cls => `<svg viewBox="0 0 32 32" class="${cls}" aria-hidden="true"><path d="M13 5h6v8h8v6h-8v8h-6v-8H5v-6h8z" fill="#34C27A"/></svg>`;
 const ECG_SVG = (h = "h-8") => `<svg viewBox="0 0 300 40" class="mt-3 ${h} w-full" aria-hidden="true"><path class="ecg-line" d="M0 20h70l8-14 10 30 9-26 7 10h50l6-8 8 8h132" fill="none" stroke="#34C27A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
@@ -79,7 +80,7 @@ const SERVIZI = [
   { cat: "pratiche", icona: "calendar", titolo: "Prenotazione visite ed esami (CUP)", testo: "Prenotiamo per te visite ed esami del Servizio sanitario regionale.", stato: "attivo", url: "/servizi/prenotazione-cup/" },
   { cat: "pratiche", icona: "truck", titolo: "Consegna a domicilio", testo: "Per chi non può muoversi: portiamo farmaci e prodotti a casa.", stato: "attivo", url: "/servizi/consegna-a-domicilio/" },
   { cat: "pratiche", icona: "file", titolo: "Ordina su WhatsApp, ritira in farmacia", testo: "Scrivici cosa ti serve, paga online con il link che ti inviamo e passa a ritirare.", stato: "attivo", url: "/ordina-su-whatsapp/" },
-  { cat: "pratiche", icona: "user", titolo: "Scelta e revoca del medico", testo: "Cambia il medico di famiglia senza andare agli sportelli ASST.", stato: "presto" }
+  { cat: "pratiche", icona: "user", titolo: "Scelta e revoca del medico di base", testo: "Scegli o cambi il medico di famiglia o il pediatra direttamente in farmacia, senza andare agli sportelli ASST.", stato: "attivo", url: "/servizi/scelta-revoca-medico/" }
 ];
 
 const REPARTI = [
@@ -102,6 +103,7 @@ const FAQ = [
   ["Come funziona l'ordine su WhatsApp?", "Scrivici cosa ti serve: ti confermiamo disponibilità e prezzo e ti inviamo un link per pagare online. Quando l'ordine è pronto ti avvisiamo e passi a ritirarlo in farmacia. I farmaci si pagano al momento del ritiro."],
   ["Fate consegne a domicilio?", "Sì, per chi ha difficoltà a muoversi. Scrivici o chiamaci per accordarci su giorno e orario."],
   ["C'è parcheggio?", "Sì, c'è un parcheggio gratuito vicino alla farmacia, anche con posti accessibili in carrozzina."],
+  ["Posso cambiare il medico di base in farmacia?", "Sì. Con la tessera sanitaria e un documento d'identità puoi scegliere o cambiare il medico di famiglia o il pediatra direttamente al bancone, senza appuntamento."],
   ["Dove trovo la farmacia di turno?", "Nella pagina «Farmacia di turno» trovi i nostri turni e il collegamento al servizio ufficiale con le farmacie aperte di notte e nei festivi. In caso di emergenza chiama il 112."]
 ];
 const orariFrase = () => {
@@ -182,8 +184,9 @@ const header = cur => `
       <span class="grid h-11 w-11 place-items-center rounded-xl bg-forest-700">${CROSS("h-7 w-7")}</span>
       <span class="leading-tight">
         <span class="block font-display text-[19px] font-semibold text-ink">Farmacia Comunale</span>
-        <span class="block text-[12px] font-bold uppercase tracking-[.14em] text-forest-600">${esc(C.citta)} · ${esc(C.quartiere)}</span>
+        <span class="block whitespace-nowrap text-[12px] font-bold uppercase tracking-[.08em] text-forest-600 sm:tracking-[.14em]">${esc(C.citta)} · ${esc(C.quartiere)}</span>
       </span>
+      <span class="flex items-center border-l border-line pl-2.5 sm:ml-1 sm:pl-3">${STEMMA("h-9 w-auto sm:h-11")}</span>
     </a>
     <nav class="hidden items-center gap-1 xl:flex" aria-label="Principale">
       ${NAV.map(([h, t]) => `<a class="navlink" href="${h}"${isActive(h, cur) ? ' aria-current="page"' : ""}>${t}</a>`).join("\n      ")}
@@ -211,6 +214,7 @@ const footer = () => `
         <span class="grid h-10 w-10 place-items-center rounded-xl bg-white/10">${CROSS("h-6 w-6")}</span>
         <span class="font-display text-lg font-semibold text-white">${esc(C.nome)}</span>
       </a>
+      <p class="mt-4 flex items-center gap-3 text-sm">${STEMMA("h-12 w-auto")}<span>Farmacia del <strong class="text-white">Comune di ${esc(C.citta)}</strong></span></p>
       <address class="mt-4 text-sm not-italic">${esc(C.via)}<br>${esc(C.cap)} ${esc(C.citta)} (${esc(C.provincia)}) · quartiere ${esc(C.quartiere)}</address>
       <p class="mt-2 text-sm">Tel. <a href="${TEL}" data-href="tel" class="font-bold hover:text-white">${esc(C.telefono)}</a></p>
       <p class="mt-1 text-sm">WhatsApp <a ${waAttr("Buongiorno, vorrei un'informazione.")} class="font-bold hover:text-white">${esc(WA_LABEL)}</a></p>
@@ -243,7 +247,7 @@ const footer = () => `
       </ul>
     </div>
   </div>
-  <p class="mx-auto mt-10 max-w-7xl px-4 text-xs text-forest-100/60 sm:px-6">© <span class="year">${new Date().getFullYear()}</span> ${esc(C.nome)}. Le informazioni del sito non sostituiscono il parere del medico. Alcune foto di esempio: Unsplash.</p>
+  <p class="mx-auto mt-10 max-w-7xl px-4 text-xs text-forest-100/60 sm:px-6">© <span class="year">${new Date().getFullYear()}</span> ${esc(C.nome)}. Le informazioni del sito non sostituiscono il parere del medico. Alcune foto di esempio: Unsplash. Stemma del Comune di Canegrate: <a href="https://commons.wikimedia.org/wiki/File:Canegrate-Stemma.svg" target="_blank" rel="noopener" class="underline hover:text-white">Arrow303 via Wikimedia Commons</a>, licenza <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.it" target="_blank" rel="noopener" class="underline hover:text-white">CC BY-SA 4.0</a>.</p>
 </footer>
 
 <nav class="fixed inset-x-3 bottom-3 z-40 grid grid-cols-3 gap-2 rounded-2xl border border-line bg-paper/95 p-2 shadow-2xl backdrop-blur lg:hidden" aria-label="Azioni rapide">
@@ -665,7 +669,7 @@ ${pageHero({ eyebrow: "Servizi", h1: "Servizi in farmacia a Canegrate", intro: "
     <h2>Come prenotare un servizio</h2>
     <p>Le misurazioni di <a href="/servizi/autoanalisi-glicemia-colesterolo/">glicemia, colesterolo</a> e <a href="/servizi/misurazione-pressione/">pressione</a> si fanno senza appuntamento, negli <a href="/orari-e-dove-siamo/">orari di apertura</a>. Per <a href="/servizi/elettrocardiogramma-ecg/">elettrocardiogramma</a>, <a href="/servizi/holter-cardiaco/">Holter cardiaco</a> e <a href="/servizi/holter-pressorio/">Holter pressorio</a> scrivici su WhatsApp al ${esc(WA_LABEL)} o chiama lo ${esc(C.telefono)}: ti proponiamo il primo giorno libero.</p>
     <h2>Servizi in arrivo</h2>
-    <p>Nei prossimi mesi aggiungeremo emoglobina glicata, vaccinazione antinfluenzale, spirometria e scelta e revoca del medico di famiglia. Se ti interessa uno di questi servizi, scrivici: ti avvisiamo appena è disponibile.</p>
+    <p>Nei prossimi mesi aggiungeremo emoglobina glicata, vaccinazione antinfluenzale e spirometria. Se ti interessa uno di questi servizi, scrivici: ti avvisiamo appena è disponibile.</p>
   </div>
 </section>
 ${ctaBand()}`
@@ -889,7 +893,42 @@ svc({
     ["Serve un appuntamento per prenotare al CUP in farmacia?", "No, passa negli orari di apertura. Nelle ore più tranquille, come metà mattina, aspetti meno."],
     ["Quali visite ed esami si possono prenotare?", "Le prestazioni del Servizio sanitario regionale prescritte dal medico con ricetta. Alcuni esami particolari si prenotano solo presso la struttura: in quel caso ti diciamo a chi rivolgerti."]
   ],
-  related: ["/servizi/consegna-a-domicilio/", "/servizi/elettrocardiogramma-ecg/", "/ordina-su-whatsapp/"]
+  related: ["/servizi/scelta-revoca-medico/", "/servizi/consegna-a-domicilio/", "/ordina-su-whatsapp/"]
+});
+
+svc({
+  path: "/servizi/scelta-revoca-medico/", crumb: "Scelta e revoca del medico", nomeServizio: "Scelta e revoca del medico di base e del pediatra in farmacia",
+  title: "Scelta e revoca del medico di base in farmacia a Canegrate | Farmacia Comunale",
+  description: "Scegli o cambia il medico di famiglia o il pediatra alla Farmacia Comunale di Canegrate, senza code agli sportelli ASST. Porta tessera sanitaria e documento d'identità.",
+  eyebrow: "Pratiche · Medico di base", h1: "Scelta e revoca del medico di base in farmacia",
+  intro: "Devi scegliere il medico di famiglia o il pediatra, o vuoi cambiarlo? Lo facciamo noi al bancone, in pochi minuti, senza passare dagli sportelli ASST.",
+  stato: "attivo", waMsg: "Buongiorno, vorrei informazioni sulla scelta / revoca del medico di base.",
+  boxTitolo: "Cosa portare", box: ["Tessera sanitaria dell'assistito", "Documento d'identità valido", "Il nome del nuovo medico, se lo sai già", "Senza appuntamento"],
+  corpo: `
+<h2>Cosa puoi fare in farmacia</h2>
+<ul>
+<li><strong>Scegliere il medico di medicina generale</strong> (medico di base o di famiglia), per esempio se ti sei appena trasferito a Canegrate.</li>
+<li><strong>Cambiare medico</strong>: la revoca del medico attuale e la scelta del nuovo avvengono insieme.</li>
+<li><strong>Scegliere o cambiare il pediatra</strong> di libera scelta per i tuoi figli.</li>
+</ul>
+<h2>Come funziona</h2>
+<ol>
+<li><strong>Vieni in farmacia</strong> con la tessera sanitaria e un documento d'identità della persona che deve scegliere o cambiare il medico.</li>
+<li><strong>Vediamo insieme i medici disponibili</strong> nella tua zona, cioè quelli che hanno ancora posti liberi.</li>
+<li><strong>Registriamo la scelta</strong> nel sistema di Regione Lombardia e ti consegniamo la ricevuta con il nome del nuovo medico.</li>
+</ol>
+<h2>Cosa sapere</h2>
+<ul>
+<li>Puoi farlo anche per un familiare: porta la sua tessera sanitaria e chiedici quali documenti servono nel tuo caso.</li>
+<li>Alcuni casi particolari, come il domicilio sanitario per chi non è residente in Lombardia, si gestiscono solo agli sportelli ASST: se è il tuo caso ti diciamo a chi rivolgerti.</li>
+<li>Il nuovo medico e le tue ricette sono visibili anche nel <a href="https://www.fascicolosanitario.regione.lombardia.it/" target="_blank" rel="noopener">Fascicolo Sanitario Elettronico</a>.</li>
+</ul>`,
+  faq: [
+    ["Serve un appuntamento per cambiare il medico in farmacia?", "No, passa negli orari di apertura con la tessera sanitaria e un documento d'identità."],
+    ["Posso cambiare il medico per un familiare?", "Sì, porta la tessera sanitaria della persona interessata. Chiedici prima quali documenti servono, così non devi tornare."],
+    ["Posso scegliere anche il pediatra?", "Sì, in farmacia si può scegliere o cambiare anche il pediatra di libera scelta per i bambini."]
+  ],
+  related: ["/servizi/prenotazione-cup/", "/servizi/consegna-a-domicilio/", "/prenota-ricetta/"]
 });
 
 svc({
@@ -1089,7 +1128,7 @@ add({
       <h1 class="mt-3 font-display text-[38px] font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl">Una farmacia pubblica, nata per il quartiere.</h1>
       <div class="mt-6 space-y-4 text-lg leading-relaxed text-muted">
         <p>Siamo la prima farmacia comunale di Canegrate, aperta l'8 ottobre 2026 in Piazza della Musica, nel quartiere ${esc(C.quartiere)}. Siamo un servizio di prossimità per Canegrate e per i comuni vicini: ${esc(C.comuniVicini.join(", "))}.</p>
-        <p>Farmaci con ricetta e da banco, fitoterapici, integratori, dermocosmesi e articoli per l'infanzia. E poi <a href="/servizi/autoanalisi-glicemia-colesterolo/" class="font-bold text-forest-700 underline underline-offset-2">autoanalisi</a>, <a href="/servizi/elettrocardiogramma-ecg/" class="font-bold text-forest-700 underline underline-offset-2">ECG</a> e <a href="/servizi/holter-cardiaco/" class="font-bold text-forest-700 underline underline-offset-2">Holter</a>, <a href="/servizi/prenotazione-cup/" class="font-bold text-forest-700 underline underline-offset-2">prenotazioni CUP</a> e <a href="/servizi/consegna-a-domicilio/" class="font-bold text-forest-700 underline underline-offset-2">consegna a domicilio</a>. Nei prossimi mesi aggiungeremo nuovi servizi.</p>
+        <p>Farmaci con ricetta e da banco, fitoterapici, integratori, dermocosmesi e articoli per l'infanzia. E poi <a href="/servizi/autoanalisi-glicemia-colesterolo/" class="font-bold text-forest-700 underline underline-offset-2">autoanalisi</a>, <a href="/servizi/elettrocardiogramma-ecg/" class="font-bold text-forest-700 underline underline-offset-2">ECG</a> e <a href="/servizi/holter-cardiaco/" class="font-bold text-forest-700 underline underline-offset-2">Holter</a>, <a href="/servizi/prenotazione-cup/" class="font-bold text-forest-700 underline underline-offset-2">prenotazioni CUP</a>, <a href="/servizi/scelta-revoca-medico/" class="font-bold text-forest-700 underline underline-offset-2">scelta e revoca del medico</a> e <a href="/servizi/consegna-a-domicilio/" class="font-bold text-forest-700 underline underline-offset-2">consegna a domicilio</a>. Nei prossimi mesi aggiungeremo nuovi servizi.</p>
       </div>
       <dl class="mt-10 grid grid-cols-3 gap-4">
         <div class="card p-5"><dt class="text-xs font-bold uppercase tracking-wider text-muted">Gestione</dt><dd class="mt-2 font-display text-xl font-semibold">${esc(C.gestore)}</dd></div>
