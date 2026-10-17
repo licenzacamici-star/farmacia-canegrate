@@ -1,1087 +1,493 @@
 <!doctype html>
-<html lang="it" class="scroll-smooth">
+<html lang="it">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- =====================================================================
-     SITO FARMACIA COMUNALE CANEGRATE — file unico, costo zero
-     -----------------------------------------------------------------
-     COSA MODIFICARE (tutto in un solo posto):
-       1) Cerca "const CONFIG" più in basso: nome, telefono, WhatsApp,
-          email, orari, turni, servizi attivi.
-       2) Le TUE FOTO: crea una cartella "foto" accanto a questo file e
-          caricaci dentro i file con questi nomi esatti:
-             foto/negozio.jpg   (foto grande in apertura: interno farmacia)
-             foto/team.jpg      (sezione Chi siamo: staff al bancone)
-             foto/staff-1.jpg   foto/staff-2.jpg   foto/staff-3.jpg (ritratti)
-             foto/vetrina.jpg   (sezione distributore: vetrina, insegna, porticato)
-          Formato consigliato: JPG orizzontale, lato lungo 1600 px, < 400 KB.
-          Appena presenti, sostituiscono da sole le foto di esempio.
-          Per vedere dove finisce ogni foto apri il sito con ?foto=1
-          (es. https://tuosito.github.io/?foto=1).
-     ===================================================================== -->
+<!-- Pagina generata da sorgente/build.mjs: per modificare i testi cambia quel file, non questo. -->
 <title>Farmacia Comunale Canegrate · Quartiere Cascinette | Ricette, autoanalisi, ECG</title>
-<meta name="description" content="Farmacia Comunale di Canegrate, quartiere Cascinette. Prenota la ricetta su WhatsApp, autoanalisi (glicemia, colesterolo, pressione), ECG e Holter, dermocosmesi, infanzia, veterinaria, fitoterapia. Vicina a Legnano.">
+<meta name="description" content="Farmacia Comunale di Canegrate, quartiere Cascinette (Piazza della Musica 6). Prenota la ricetta su WhatsApp, autoanalisi, ECG e Holter, CUP, consegna a domicilio. Vicina a Legnano.">
 <link rel="canonical" href="https://www.gruppofarmapoint.it/">
-<meta property="og:url" content="https://www.gruppofarmapoint.it/">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#0E4D3F">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Farmacia Comunale Canegrate · Quartiere Cascinette">
-<meta property="og:description" content="Ricette su WhatsApp, autoanalisi, ECG e Holter, consulenza. La farmacia del quartiere Cascinette.">
-<meta property="og:image" content="https://images.unsplash.com/photo-1576602976047-174e57a47881?w=1200&h=630&fit=crop&q=75&auto=format">
+<meta property="og:site_name" content="Farmacia Comunale Canegrate">
 <meta property="og:locale" content="it_IT">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230E4D3F'/%3E%3Cpath d='M13 6h6v7h7v6h-7v7h-6v-7H6v-6h7z' fill='%2334C27A'/%3E%3C/svg%3E">
-
+<meta property="og:url" content="https://www.gruppofarmapoint.it/">
+<meta property="og:title" content="Farmacia Comunale Canegrate · Quartiere Cascinette | Ricette, autoanalisi, ECG">
+<meta property="og:description" content="Farmacia Comunale di Canegrate, quartiere Cascinette (Piazza della Musica 6). Prenota la ricetta su WhatsApp, autoanalisi, ECG e Holter, CUP, consegna a domicilio. Vicina a Legnano.">
+<meta property="og:image" content="https://www.gruppofarmapoint.it/foto/negozio.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<!-- Stile compilato una sola volta (prima veniva generato nel browser a ogni visita) -->
-<link rel="stylesheet" href="styles.css">
-<style>
-  /* Stili base (funzionano anche prima che Tailwind sia caricato) */
-  html { -webkit-text-size-adjust: 100%; }
-  body { background: #F7F5EF; color: #10241E; font-family: Manrope, system-ui, sans-serif; }
-  [x-cloak] { display: none !important; }
-  .ecg-line { stroke-dasharray: 600; stroke-dashoffset: 600; animation: ecg 3.2s linear infinite; }
-  @keyframes ecg { to { stroke-dashoffset: -600; } }
-  .pulse-dot { box-shadow: 0 0 0 0 rgba(52,194,122,.6); animation: pulse 2s infinite; }
-  @keyframes pulse { 70% { box-shadow: 0 0 0 10px rgba(52,194,122,0); } 100% { box-shadow: 0 0 0 0 rgba(52,194,122,0); } }
-  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
-  .reveal.in { opacity: 1; transform: none; }
-  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .ecg-line, .pulse-dot { animation: none; stroke-dashoffset: 0; } }
-  /* Modalità anteprima foto (?foto=1) */
-  .foto-mode [data-foto] { outline: 3px dashed #E2674A; outline-offset: -3px; position: relative; }
-  .foto-mode [data-foto]::after { content: "📷 " attr(data-foto); position: absolute; left: 10px; top: 10px; background: #E2674A; color: #fff; font: 700 12px/1 Manrope, sans-serif; padding: 6px 9px; border-radius: 999px; z-index: 5; }
-  dialog::backdrop { background: rgba(10,47,39,.55); }
-</style>
+<link rel="stylesheet" href="/styles.css?v=2026101713">
+<script>document.documentElement.classList.add("js")</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Pharmacy","@id":"https://www.gruppofarmapoint.it/#farmacia","name":"Farmacia Comunale Canegrate","alternateName":"Farmacia Comunale Canegrate Cascinette","url":"https://www.gruppofarmapoint.it/","telephone":"+39 0331 725821","image":["https://www.gruppofarmapoint.it/foto/negozio.jpg","https://www.gruppofarmapoint.it/foto/vetrina.jpg","https://www.gruppofarmapoint.it/foto/team.jpg"],"logo":"https://www.gruppofarmapoint.it/assets/logo.svg","address":{"@type":"PostalAddress","streetAddress":"Piazza della Musica, 6","addressLocality":"Canegrate","postalCode":"20039","addressRegion":"MI","addressCountry":"IT"},"hasMap":"https://www.google.com/maps/search/?api=1&query=Farmacia%20Comunale%20Canegrate%2C%20Piazza%20della%20Musica%206%2C%2020039%20Canegrate%20MI","areaServed":[{"@type":"City","name":"Canegrate"},{"@type":"City","name":"Legnano"},{"@type":"City","name":"Parabiago"},{"@type":"City","name":"Cerro Maggiore"},{"@type":"City","name":"San Vittore Olona"},{"@type":"City","name":"Nerviano"}],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":"Monday","opens":"08:00","closes":"12:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Monday","opens":"15:00","closes":"19:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Tuesday","opens":"08:00","closes":"12:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Tuesday","opens":"15:00","closes":"19:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Wednesday","opens":"08:00","closes":"12:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Wednesday","opens":"15:00","closes":"19:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Thursday","opens":"08:00","closes":"12:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Thursday","opens":"15:00","closes":"19:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Friday","opens":"08:00","closes":"12:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Friday","opens":"15:00","closes":"19:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"09:00","closes":"12:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"15:00","closes":"18:00"}],"currenciesAccepted":"EUR","paymentAccepted":"Contanti, carte di pagamento, contactless","amenityFeature":[{"@type":"LocationFeatureSpecification","name":"Parcheggio gratuito","value":true},{"@type":"LocationFeatureSpecification","name":"Ingresso accessibile in carrozzina","value":true},{"@type":"LocationFeatureSpecification","name":"Bagno accessibile","value":true},{"@type":"LocationFeatureSpecification","name":"Dispositivi di ascolto assistito","value":true},{"@type":"LocationFeatureSpecification","name":"Pagamento con carte e contactless","value":true},{"@type":"LocationFeatureSpecification","name":"Consegna a domicilio","value":true}],"parentOrganization":{"@type":"Organization","name":"Farma Point Srl","vatID":"IT14318590966"},"sameAs":["https://www.google.com/maps/search/?api=1&query=Farmacia+Comunale+Canegrate+Piazza+della+Musica+6"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://www.gruppofarmapoint.it/#sito","name":"Farmacia Comunale Canegrate","url":"https://www.gruppofarmapoint.it/","inLanguage":"it-IT","publisher":{"@id":"https://www.gruppofarmapoint.it/#farmacia"}}</script>
 </head>
-
 <body class="font-sans antialiased">
-<a href="#contenuto" class="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[100] focus:rounded-lg focus:bg-paper focus:px-4 focus:py-2">Vai al contenuto</a>
 
-<!-- ============ BARRA INFO ============ -->
+<a href="#contenuto" class="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[100] focus:rounded-lg focus:bg-paper focus:px-4 focus:py-2">Vai al contenuto</a>
 <div class="bg-forest-900 text-[13px] text-forest-100">
   <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6">
-    <p class="truncate"><span class="font-bold text-cross">Nuova apertura</span> · <span data-cfg="apertura"></span> nel quartiere Cascinette</p>
+    <p class="truncate"><span class="font-bold text-cross">Nuova apertura</span> · Aperta dall&#39;8 ottobre 2026 nel quartiere Cascinette</p>
     <div class="hidden items-center gap-5 md:flex">
-      <a data-href="tel" class="hover:text-white">Tel. <span data-cfg="telefono"></span></a>
-      <span class="flex items-center gap-2"><span class="status-dot h-2 w-2 rounded-full bg-cross pulse-dot"></span><span class="status-short">—</span></span>
+      <a href="tel:0331725821" data-href="tel" class="hover:text-white">Tel. 0331 725821</a>
+      <a href="/orari-e-dove-siamo/" class="flex items-center gap-2 hover:text-white"><span class="status-dot h-2 w-2 rounded-full bg-cross"></span><span class="status-short">Dal lunedì al venerdì 8:00–12:30 · 15:00–19:30, il sabato 9:00–12:30 · 15:00–18:00, la domenica siamo chiusi.</span></a>
     </div>
   </div>
 </div>
-
-<!-- ============ HEADER ============ -->
-<header id="top" class="sticky top-0 z-50 border-b border-line/70 bg-cream/85 backdrop-blur-md">
+<header class="sticky top-0 z-50 border-b border-line/70 bg-cream/85 backdrop-blur-md">
   <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-    <a href="#home" class="flex items-center gap-3" aria-label="Torna all'inizio">
-      <span class="grid h-11 w-11 place-items-center rounded-xl bg-forest-700">
-        <svg viewBox="0 0 32 32" class="h-7 w-7" aria-hidden="true"><path d="M13 5h6v8h8v6h-8v8h-6v-8H5v-6h8z" fill="#34C27A"/></svg>
-      </span>
+    <a href="/" class="flex items-center gap-3" aria-label="Farmacia Comunale Canegrate – pagina iniziale">
+      <span class="grid h-11 w-11 place-items-center rounded-xl bg-forest-700"><svg viewBox="0 0 32 32" class="h-7 w-7" aria-hidden="true"><path d="M13 5h6v8h8v6h-8v8h-6v-8H5v-6h8z" fill="#34C27A"/></svg></span>
       <span class="leading-tight">
         <span class="block font-display text-[19px] font-semibold text-ink">Farmacia Comunale</span>
         <span class="block text-[12px] font-bold uppercase tracking-[.14em] text-forest-600">Canegrate · Cascinette</span>
       </span>
     </a>
-    <nav class="hidden items-center gap-1 lg:flex" aria-label="Principale">
-      <a class="navlink" href="#home">Home</a>
-      <a class="navlink" href="#servizi">Servizi</a>
-      <a class="navlink" href="#prenota">Prenota ricetta</a>
-      <a class="navlink" href="#chi-siamo">Chi siamo</a>
-      <a class="navlink" href="#dove">Dove siamo e turni</a>
-      <a class="navlink" href="#contatti">Contatti</a>
+    <nav class="hidden items-center gap-1 xl:flex" aria-label="Principale">
+      <a class="navlink" href="/" aria-current="page">Home</a>
+      <a class="navlink" href="/servizi/">Servizi</a>
+      <a class="navlink" href="/prenota-ricetta/">Prenota ricetta</a>
+      <a class="navlink" href="/chi-siamo/">Chi siamo</a>
+      <a class="navlink" href="/orari-e-dove-siamo/">Orari e dove siamo</a>
+      <a class="navlink" href="/farmacia-di-turno/">Turni</a>
+      <a class="navlink" href="/contatti/">Contatti</a>
     </nav>
     <div class="flex items-center gap-2">
-      <a href="#prenota" class="btn-primary hidden !px-4 !py-2.5 sm:inline-flex">Prenota ricetta</a>
-      <button id="menuBtn" class="grid h-11 w-11 place-items-center rounded-xl border border-line bg-paper lg:hidden" aria-expanded="false" aria-controls="mobileNav" aria-label="Apri il menu">
+      <a href="/prenota-ricetta/" class="btn-primary hidden !px-4 !py-2.5 sm:inline-flex">Prenota ricetta</a>
+      <button id="menuBtn" class="grid h-11 w-11 place-items-center rounded-xl border border-line bg-paper xl:hidden" aria-expanded="false" aria-controls="mobileNav" aria-label="Apri il menu">
         <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
     </div>
   </div>
-  <nav id="mobileNav" class="hidden border-t border-line bg-cream px-4 pb-4 lg:hidden" aria-label="Menu mobile">
-    <div class="grid gap-1 pt-2 text-lg font-semibold">
-      <a class="rounded-xl px-3 py-3 hover:bg-forest-50" href="#home">Home</a>
-      <a class="rounded-xl px-3 py-3 hover:bg-forest-50" href="#servizi">Servizi</a>
-      <a class="rounded-xl px-3 py-3 hover:bg-forest-50" href="#prenota">Prenota ricetta</a>
-      <a class="rounded-xl px-3 py-3 hover:bg-forest-50" href="#chi-siamo">Chi siamo</a>
-      <a class="rounded-xl px-3 py-3 hover:bg-forest-50" href="#dove">Dove siamo e turni</a>
-      <a class="rounded-xl px-3 py-3 hover:bg-forest-50" href="#contatti">Contatti</a>
+  <nav id="mobileNav" class="hidden border-t border-line bg-cream px-4 pb-4 xl:hidden" aria-label="Menu mobile">
+    <div class="grid gap-1 pt-2 text-lg font-semibold sm:grid-cols-2">
+      <a class="rounded-xl px-3 py-3 hover:bg-forest-50 bg-forest-50 text-forest-700" href="/" aria-current="page">Home</a>
+      <a class="rounded-xl px-3 py-3 hover:bg-forest-50" href="/servizi/">Servizi</a>
+      <a class="rounded-xl px-3 py-3 hover:bg-forest-50" href="/prenota-ricetta/">Prenota ricetta</a>
+      <a class="rounded-xl px-3 py-3 hover:bg-forest-50" href="/chi-siamo/">Chi siamo</a>
+      <a class="rounded-xl px-3 py-3 hover:bg-forest-50" href="/orari-e-dove-siamo/">Orari e dove siamo</a>
+      <a class="rounded-xl px-3 py-3 hover:bg-forest-50" href="/farmacia-di-turno/">Turni</a>
+      <a class="rounded-xl px-3 py-3 hover:bg-forest-50" href="/contatti/">Contatti</a>
+      <a class="rounded-xl px-3 py-3 hover:bg-forest-50" href="/ordina-su-whatsapp/">Ordina su WhatsApp</a>
+      <a class="rounded-xl px-3 py-3 hover:bg-forest-50" href="/domande-frequenti/">Domande frequenti</a>
     </div>
   </nav>
 </header>
-
 <main id="contenuto">
 
-<!-- ============ HOME / HERO ============ -->
-<section id="home" class="relative overflow-hidden">
+
+<section class="relative overflow-hidden">
   <div class="mx-auto grid max-w-7xl items-center gap-10 px-4 pb-14 pt-10 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:gap-14 lg:pb-24 lg:pt-16">
     <div>
-      <div id="heroStatus" class="mb-6 inline-flex items-center gap-2.5 rounded-full border border-line bg-paper py-1.5 pl-2 pr-4 text-sm font-bold text-ink">
-        <span class="status-pill rounded-full bg-forest-50 px-2.5 py-1 text-xs font-extrabold uppercase tracking-wider text-forest-700">…</span>
-        <span class="status-long text-muted">Calcolo orari…</span>
-      </div>
-      <h1 class="font-display text-[44px] leading-[1.02] font-semibold tracking-tight text-ink sm:text-6xl lg:text-[68px]">
-        La farmacia<br>del tuo quartiere,<br><span class="italic text-forest-600">a portata di messaggio.</span>
+      <a href="/orari-e-dove-siamo/" class="mb-6 inline-flex items-center gap-2.5 rounded-full border border-line bg-paper py-1.5 pl-2 pr-4 text-sm font-bold text-ink hover:border-forest-500">
+        <span class="status-pill rounded-full bg-forest-50 px-2.5 py-1 text-xs font-extrabold uppercase tracking-wider text-forest-700">Orari</span>
+        <span class="status-long text-muted">Lun–ven 8:00–12:30 · 15:00–19:30</span>
+      </a>
+      <h1 class="font-display text-[44px] font-semibold leading-[1.02] tracking-tight text-ink sm:text-6xl lg:text-[68px]">
+        <span class="sr-only">Farmacia Comunale Canegrate: </span>La farmacia<br>del tuo quartiere,<br><span class="italic text-forest-600">a portata di messaggio.</span>
       </h1>
       <p class="mt-6 max-w-xl text-lg leading-relaxed text-muted">
         Prenoti la ricetta su WhatsApp e passi a ritirarla quando è pronta, senza code.
-        Autoanalisi, ECG e Holter, consigli su misura: siamo la nuova Farmacia Comunale
-        delle Cascinette di Canegrate, a pochi minuti da Legnano.
+        Autoanalisi, ECG e Holter, consigli su misura: siamo la nuova <strong class="text-ink">Farmacia Comunale
+        delle Cascinette di Canegrate</strong>, a pochi minuti da Legnano.
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <a href="#prenota" class="btn-primary !px-6 !py-3.5">
-          Prenota la ricetta
-          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a data-wa="Buongiorno, vorrei un'informazione." class="btn-wa !px-6 !py-3.5" target="_blank" rel="noopener">
-          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-          Scrivici su WhatsApp
-        </a>
+        <a href="/prenota-ricetta/" class="btn-primary !px-6 !py-3.5">Prenota la ricetta <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="https://wa.me/393534203900?text=Buongiorno%2C%20vorrei%20un&#39;informazione." data-wa="Buongiorno, vorrei un&#39;informazione." target="_blank" rel="noopener" class="btn-wa !px-6 !py-3.5 "><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>Scrivici su WhatsApp</a>
       </div>
       <dl class="mt-10 grid max-w-xl grid-cols-3 gap-4 border-t border-line pt-6">
-        <div><dt class="text-xs font-bold uppercase tracking-wider text-muted">Oggi</dt><dd class="today-hours mt-1 text-[15px] font-bold text-ink">—</dd></div>
+        <div><dt class="text-xs font-bold uppercase tracking-wider text-muted">Oggi</dt><dd class="today-hours mt-1 text-[15px] font-bold text-ink">8:00–12:30 · 15:00–19:30</dd></div>
         <div><dt class="text-xs font-bold uppercase tracking-wider text-muted">Ordini</dt><dd class="mt-1 text-[15px] font-bold text-ink">WhatsApp e ritiro*</dd></div>
-        <div><dt class="text-xs font-bold uppercase tracking-wider text-muted">Distributore</dt><dd class="h24-short mt-1 text-[15px] font-bold text-ink">H24</dd></div>
+        <div><dt class="text-xs font-bold uppercase tracking-wider text-muted">Distributore</dt><dd class="h24-short mt-1 text-[15px] font-bold text-ink">H24 in arrivo</dd></div>
       </dl>
       <p class="mt-3 text-xs text-muted">*Ricette e ordini pronti di solito in giornata: ti avvisiamo noi quando puoi passare.</p>
-      <a data-rating target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-3 rounded-full border border-line bg-paper py-2 pl-3 pr-4 text-sm transition hover:border-forest-500">
-        <span class="font-display text-lg font-semibold text-ink r-voto">5,0</span>
+      <a data-rating href="https://www.google.com/maps/search/?api=1&amp;query=Farmacia+Comunale+Canegrate+Piazza+della+Musica+6" target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-3 rounded-full border border-line bg-paper py-2 pl-3 pr-4 text-sm transition hover:border-forest-500">
+        <span class="r-voto font-display text-lg font-semibold text-ink">5,0</span>
         <span class="text-sun" aria-hidden="true">★★★★★</span>
-        <span class="r-num font-semibold text-muted">recensioni su Google</span>
+        <span class="r-num font-semibold text-muted">31 recensioni su Google</span>
       </a>
     </div>
-
     <div class="relative">
       <div class="absolute -right-24 -top-16 h-80 w-80 rounded-full bg-forest-100/70 blur-3xl" aria-hidden="true"></div>
       <figure class="relative overflow-hidden rounded-[32px] bg-forest-100 shadow-[0_30px_60px_-30px_rgba(14,77,63,.45)]" data-foto="foto/negozio.jpg">
-        <img class="aspect-[4/3] w-full object-cover sm:aspect-square lg:aspect-[4/5]"
-             src="foto/negozio.jpg"
+        <img class="aspect-[4/3] w-full object-cover sm:aspect-square lg:aspect-[4/5]" src="/foto/negozio.jpg"
              data-fallback="https://images.unsplash.com/photo-1576602976047-174e57a47881?w=1200&q=75&auto=format"
-             alt="Interno della farmacia con scaffali ordinati e bancone" width="960" height="1200" fetchpriority="high">
+             alt="Interno della Farmacia Comunale di Canegrate, quartiere Cascinette" width="960" height="1200" fetchpriority="high">
       </figure>
-      <div class="absolute -bottom-6 left-4 right-4 rounded-2xl border border-line bg-paper/95 p-4 shadow-xl backdrop-blur sm:left-auto sm:right-6 sm:w-72">
-        <div class="flex items-center gap-3">
-          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-forest-50 text-forest-700">
-            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg>
-          </span>
-          <div>
-            <p class="text-sm font-extrabold text-ink">ECG e Holter in farmacia</p>
-            <p class="text-[13px] text-muted">Referto del cardiologo a distanza</p>
-          </div>
-        </div>
+      <a href="/servizi/elettrocardiogramma-ecg/" class="absolute -bottom-6 left-4 right-4 block rounded-2xl border border-line bg-paper/95 p-4 shadow-xl backdrop-blur hover:border-forest-500 sm:left-auto sm:right-6 sm:w-72">
+        <span class="flex items-center gap-3">
+          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-forest-50 text-forest-700"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg></span>
+          <span><span class="block text-sm font-extrabold text-ink">ECG e Holter in farmacia</span><span class="block text-[13px] text-muted">Referto del cardiologo a distanza</span></span>
+        </span>
         <svg viewBox="0 0 300 40" class="mt-3 h-8 w-full" aria-hidden="true"><path class="ecg-line" d="M0 20h70l8-14 10 30 9-26 7 10h50l6-8 8 8h132" fill="none" stroke="#34C27A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- ============ AZIONI RAPIDE ============ -->
 <section aria-label="Azioni rapide" class="mx-auto max-w-7xl px-4 sm:px-6">
   <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
-    <a href="#prenota" class="group card reveal flex flex-col gap-3 p-5 transition hover:-translate-y-0.5 hover:border-forest-500 sm:p-6">
-      <span class="grid h-11 w-11 place-items-center rounded-xl bg-forest-700 text-white"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></svg></span>
+    <a href="/prenota-ricetta/" class="group card reveal flex flex-col gap-3 p-5 transition hover:-translate-y-0.5 hover:border-forest-500 sm:p-6">
+      <span class="grid h-11 w-11 place-items-center rounded-xl bg-forest-700 text-white"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></svg></span>
       <span class="font-display text-xl font-semibold">Prenota ricetta</span>
       <span class="text-sm text-muted">Invia il codice NRE, ritiri senza attese.</span>
     </a>
-    <a href="#servizi" data-filter-link="analisi" class="group card reveal flex flex-col gap-3 p-5 transition hover:-translate-y-0.5 hover:border-forest-500 sm:p-6">
-      <span class="grid h-11 w-11 place-items-center rounded-xl bg-forest-50 text-forest-700"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg></span>
+    <a href="/servizi/autoanalisi-glicemia-colesterolo/" class="group card reveal flex flex-col gap-3 p-5 transition hover:-translate-y-0.5 hover:border-forest-500 sm:p-6">
+      <span class="grid h-11 w-11 place-items-center rounded-xl bg-forest-50 text-forest-700"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg></span>
       <span class="font-display text-xl font-semibold">Autoanalisi</span>
       <span class="text-sm text-muted">Glicemia, colesterolo, pressione.</span>
     </a>
-    <a href="#turni" class="group card reveal flex flex-col gap-3 p-5 transition hover:-translate-y-0.5 hover:border-forest-500 sm:p-6">
-      <span class="grid h-11 w-11 place-items-center rounded-xl bg-forest-50 text-forest-700"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+    <a href="/farmacia-di-turno/" class="group card reveal flex flex-col gap-3 p-5 transition hover:-translate-y-0.5 hover:border-forest-500 sm:p-6">
+      <span class="grid h-11 w-11 place-items-center rounded-xl bg-forest-50 text-forest-700"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
       <span class="font-display text-xl font-semibold">Farmacia di turno</span>
       <span class="text-sm text-muted">Chi è aperto stanotte e nei festivi.</span>
     </a>
-    <a href="#dove" class="group card reveal flex flex-col gap-3 p-5 transition hover:-translate-y-0.5 hover:border-forest-500 sm:p-6">
-      <span class="grid h-11 w-11 place-items-center rounded-xl bg-forest-50 text-forest-700"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+    <a href="/orari-e-dove-siamo/" class="group card reveal flex flex-col gap-3 p-5 transition hover:-translate-y-0.5 hover:border-forest-500 sm:p-6">
+      <span class="grid h-11 w-11 place-items-center rounded-xl bg-forest-50 text-forest-700"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
       <span class="font-display text-xl font-semibold">Dove siamo</span>
-      <span class="text-sm text-muted" data-cfg="indirizzoBreve"></span>
+      <span class="text-sm text-muted">Piazza della Musica, 6, quartiere Cascinette</span>
     </a>
   </div>
 </section>
 
-<!-- ============ SERVIZI ============ -->
-<section id="servizi" class="scroll-mt-24 py-20 lg:py-28">
+<section class="py-20 lg:py-28">
   <div class="mx-auto max-w-7xl px-4 sm:px-6">
     <div class="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-      <div class="max-w-2xl reveal">
+      <div class="reveal max-w-2xl">
         <p class="eyebrow"><span class="h-px w-6 bg-forest-500"></span>Servizi</p>
         <h2 class="h2 mt-3">Prevenzione e controlli, senza andare in ospedale.</h2>
         <p class="mt-4 text-lg text-muted">Molti esami si fanno in pochi minuti al bancone. Per quelli su prenotazione basta un messaggio: ti diamo giorno e ora.</p>
       </div>
-      <div class="flex flex-wrap gap-2 reveal" role="group" aria-label="Filtra servizi">
-        <button class="chip" data-filter="tutti" aria-pressed="true">Tutti</button>
-        <button class="chip" data-filter="analisi" aria-pressed="false">Autoanalisi</button>
-        <button class="chip" data-filter="telemedicina" aria-pressed="false">ECG e Holter</button>
-        <button class="chip" data-filter="prevenzione" aria-pressed="false">Prevenzione</button>
-        <button class="chip" data-filter="pratiche" aria-pressed="false">Pratiche</button>
+      <a href="/servizi/" class="btn-ghost reveal self-start lg:self-auto">Tutti i servizi <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+    <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <article data-cat="analisi" class="group card relative flex flex-col p-6 transition hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-24px_rgba(14,77,63,.45)]">
+      <div class="flex items-start justify-between gap-3">
+        <span class="grid h-12 w-12 place-items-center rounded-2xl bg-forest-50 text-forest-700"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg></span>
+        <span class="rounded-full px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wider bg-forest-50 text-forest-700">Senza appuntamento</span>
       </div>
+      <h3 class="mt-5 text-lg font-extrabold"><a href="/servizi/autoanalisi-glicemia-colesterolo/#glicemia" class="after:absolute after:inset-0 hover:text-forest-700">Glicemia</a></h3>
+      <p class="mt-1.5 flex-1 text-[15px] leading-relaxed text-muted">Risultato in pochi minuti con una goccia di sangue dal polpastrello.</p>
+      <div class="mt-5 border-t border-line pt-4"><span class="inline-flex items-center gap-1.5 text-sm font-extrabold text-forest-600">Scopri di più <svg class="h-4 w-4 transition group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+    </article>
+      <article data-cat="analisi" class="group card relative flex flex-col p-6 transition hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-24px_rgba(14,77,63,.45)]">
+      <div class="flex items-start justify-between gap-3">
+        <span class="grid h-12 w-12 place-items-center rounded-2xl bg-forest-50 text-forest-700"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg></span>
+        <span class="rounded-full px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wider bg-forest-50 text-forest-700">Senza appuntamento</span>
+      </div>
+      <h3 class="mt-5 text-lg font-extrabold"><a href="/servizi/misurazione-pressione/" class="after:absolute after:inset-0 hover:text-forest-700">Misurazione della pressione</a></h3>
+      <p class="mt-1.5 flex-1 text-[15px] leading-relaxed text-muted">Pressione arteriosa e frequenza cardiaca, senza appuntamento.</p>
+      <div class="mt-5 border-t border-line pt-4"><span class="inline-flex items-center gap-1.5 text-sm font-extrabold text-forest-600">Scopri di più <svg class="h-4 w-4 transition group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+    </article>
+      <article data-cat="telemedicina" class="group card relative flex flex-col p-6 transition hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-24px_rgba(14,77,63,.45)]">
+      <div class="flex items-start justify-between gap-3">
+        <span class="grid h-12 w-12 place-items-center rounded-2xl bg-forest-50 text-forest-700"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg></span>
+        <span class="rounded-full px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wider bg-sun/20 text-ink">Su prenotazione</span>
+      </div>
+      <h3 class="mt-5 text-lg font-extrabold"><a href="/servizi/elettrocardiogramma-ecg/" class="after:absolute after:inset-0 hover:text-forest-700">Elettrocardiogramma (ECG)</a></h3>
+      <p class="mt-1.5 flex-1 text-[15px] leading-relaxed text-muted">Tracciato in farmacia, referto del cardiologo in telemedicina.</p>
+      <div class="mt-5 border-t border-line pt-4"><span class="inline-flex items-center gap-1.5 text-sm font-extrabold text-forest-600">Scopri di più <svg class="h-4 w-4 transition group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+    </article>
+      <article data-cat="telemedicina" class="group card relative flex flex-col p-6 transition hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-24px_rgba(14,77,63,.45)]">
+      <div class="flex items-start justify-between gap-3">
+        <span class="grid h-12 w-12 place-items-center rounded-2xl bg-forest-50 text-forest-700"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
+        <span class="rounded-full px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wider bg-sun/20 text-ink">Su prenotazione</span>
+      </div>
+      <h3 class="mt-5 text-lg font-extrabold"><a href="/servizi/holter-cardiaco/" class="after:absolute after:inset-0 hover:text-forest-700">Holter cardiaco 24h</a></h3>
+      <p class="mt-1.5 flex-1 text-[15px] leading-relaxed text-muted">Monitoraggio del battito per 24 ore mentre fai la tua vita normale.</p>
+      <div class="mt-5 border-t border-line pt-4"><span class="inline-flex items-center gap-1.5 text-sm font-extrabold text-forest-600">Scopri di più <svg class="h-4 w-4 transition group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+    </article>
+      <article data-cat="telemedicina" class="group card relative flex flex-col p-6 transition hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-24px_rgba(14,77,63,.45)]">
+      <div class="flex items-start justify-between gap-3">
+        <span class="grid h-12 w-12 place-items-center rounded-2xl bg-forest-50 text-forest-700"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg></span>
+        <span class="rounded-full px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wider bg-sun/20 text-ink">Su prenotazione</span>
+      </div>
+      <h3 class="mt-5 text-lg font-extrabold"><a href="/servizi/holter-pressorio/" class="after:absolute after:inset-0 hover:text-forest-700">Holter pressorio 24h</a></h3>
+      <p class="mt-1.5 flex-1 text-[15px] leading-relaxed text-muted">Pressione registrata a intervalli per 24 ore, con referto medico.</p>
+      <div class="mt-5 border-t border-line pt-4"><span class="inline-flex items-center gap-1.5 text-sm font-extrabold text-forest-600">Scopri di più <svg class="h-4 w-4 transition group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+    </article>
+      <article data-cat="pratiche" class="group card relative flex flex-col p-6 transition hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-24px_rgba(14,77,63,.45)]">
+      <div class="flex items-start justify-between gap-3">
+        <span class="grid h-12 w-12 place-items-center rounded-2xl bg-forest-50 text-forest-700"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+        <span class="rounded-full px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wider bg-forest-50 text-forest-700">Senza appuntamento</span>
+      </div>
+      <h3 class="mt-5 text-lg font-extrabold"><a href="/servizi/prenotazione-cup/" class="after:absolute after:inset-0 hover:text-forest-700">Prenotazione visite ed esami (CUP)</a></h3>
+      <p class="mt-1.5 flex-1 text-[15px] leading-relaxed text-muted">Prenotiamo per te visite ed esami del Servizio sanitario regionale.</p>
+      <div class="mt-5 border-t border-line pt-4"><span class="inline-flex items-center gap-1.5 text-sm font-extrabold text-forest-600">Scopri di più <svg class="h-4 w-4 transition group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+    </article>
     </div>
 
-    <div id="serviceGrid" class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-live="polite"></div>
-
-    <!-- Banda telemedicina -->
     <div class="reveal mt-14 overflow-hidden rounded-[32px] bg-forest-700 text-white">
       <div class="grid items-center gap-8 p-7 sm:p-10 lg:grid-cols-[1.2fr_1fr] lg:p-14">
         <div>
           <p class="eyebrow !text-cross"><span class="h-px w-6 bg-cross"></span>Telemedicina</p>
-          <h3 class="mt-3 font-display text-3xl font-semibold leading-tight sm:text-4xl">Elettrocardiogramma e Holter, refertati dal cardiologo.</h3>
-          <p class="mt-4 max-w-xl text-forest-100">Esegui l'esame da noi, il tracciato viene inviato a un centro cardiologico e ricevi il referto firmato. In Lombardia alcune prestazioni sono gratuite per chi ha i requisiti previsti dalla Regione (per esempio esenzione per patologia cardiovascolare e prescrizione del medico): chiedici se rientri.</p>
+          <h2 class="mt-3 font-display text-3xl font-semibold leading-tight sm:text-4xl">Elettrocardiogramma e Holter, refertati dal cardiologo.</h2>
+          <p class="mt-4 max-w-xl text-forest-100">Esegui l'esame da noi, il tracciato viene inviato a un centro cardiologico e ricevi il referto firmato. In Lombardia alcune prestazioni sono gratuite per chi ha i requisiti previsti dalla Regione: chiedici se rientri.</p>
           <div class="mt-7 flex flex-wrap gap-3">
-            <a data-wa="Buongiorno, vorrei prenotare un ECG / Holter. Quali giorni avete disponibili?" target="_blank" rel="noopener" class="btn bg-white text-forest-700 hover:bg-forest-50">Prenota ECG o Holter</a>
-            <a href="https://www.farmacia-aperta.eu" target="_blank" rel="noopener" class="btn border border-white/30 text-white hover:bg-white/10">App Farmacia Aperta</a>
+            <a href="/servizi/elettrocardiogramma-ecg/" class="btn bg-white text-forest-700 hover:bg-forest-50">ECG in farmacia</a>
+            <a href="/servizi/holter-cardiaco/" class="btn border border-white/30 text-white hover:bg-white/10">Holter cardiaco</a>
+            <a href="/servizi/holter-pressorio/" class="btn border border-white/30 text-white hover:bg-white/10">Holter pressorio</a>
           </div>
         </div>
         <div class="grid grid-cols-3 gap-3 text-center">
           <div class="rounded-2xl bg-white/10 p-4"><p class="font-display text-3xl font-semibold">ECG</p><p class="mt-1 text-xs text-forest-100">a riposo, 12 derivazioni</p></div>
           <div class="rounded-2xl bg-white/10 p-4"><p class="font-display text-3xl font-semibold">24h</p><p class="mt-1 text-xs text-forest-100">Holter cardiaco</p></div>
           <div class="rounded-2xl bg-white/10 p-4"><p class="font-display text-3xl font-semibold">24h</p><p class="mt-1 text-xs text-forest-100">Holter pressorio</p></div>
-          <svg viewBox="0 0 300 50" class="col-span-3 mt-2 h-12 w-full" aria-hidden="true"><path class="ecg-line" d="M0 25h60l8-16 10 34 9-30 7 12h60l6-10 8 10h132" fill="none" stroke="#34C27A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="col-span-3"><svg viewBox="0 0 300 40" class="mt-3 h-12 w-full" aria-hidden="true"><path class="ecg-line" d="M0 20h70l8-14 10 30 9-26 7 10h50l6-8 8 8h132" fill="none" stroke="#34C27A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         </div>
       </div>
-    </div>
-
-    <!-- Reparti -->
-    <div class="mt-20">
-      <div class="reveal flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-        <div>
-          <p class="eyebrow"><span class="h-px w-6 bg-forest-500"></span>Reparti</p>
-          <h3 class="mt-3 font-display text-3xl font-semibold sm:text-4xl">Oltre al farmaco.</h3>
-        </div>
-        <p class="max-w-md text-muted">Prodotti selezionati e consiglio del farmacista. Se non lo abbiamo, lo ordiniamo: di solito arriva entro il giorno dopo.</p>
-      </div>
-      <div class="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4" id="repartiGrid"></div>
     </div>
   </div>
 </section>
 
-<!-- ============ PRENOTA RICETTA ============ -->
-<section id="prenota" class="scroll-mt-24 bg-paper py-20 lg:py-28">
-  <div class="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[.9fr_1.1fr] lg:gap-16">
+<section class="bg-paper py-20 lg:py-28">
+  <div class="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16">
     <div class="reveal">
       <p class="eyebrow"><span class="h-px w-6 bg-forest-500"></span>Prenota ricetta</p>
       <h2 class="h2 mt-3">Mandaci la ricetta,<br>al resto pensiamo noi.</h2>
       <p class="mt-4 text-lg text-muted">Niente attese al bancone: prepariamo i farmaci in anticipo e ti scriviamo quando sono pronti.</p>
-      <ol class="mt-10 space-y-6">
-        <li class="flex gap-4">
-          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-forest-700 font-display text-lg font-semibold text-white">1</span>
-          <div><p class="font-bold">Inviaci il codice NRE</p><p class="text-muted">È il numero di ricetta elettronica (NRE) che trovi sul promemoria o nel messaggio del tuo medico.</p></div>
-        </li>
-        <li class="flex gap-4">
-          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-forest-700 font-display text-lg font-semibold text-white">2</span>
-          <div><p class="font-bold">Ti avvisiamo quando è pronto</p><p class="text-muted">Se un farmaco va ordinato ti diciamo subito quando arriva.</p></div>
-        </li>
-        <li class="flex gap-4">
-          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-forest-700 font-display text-lg font-semibold text-white">3</span>
-          <div><p class="font-bold">Ritiri con la tessera sanitaria</p><p class="text-muted">Porta la tessera sanitaria dell'assistito. Puoi delegare un familiare.</p></div>
-        </li>
-      </ol>
-      <div class="mt-10 rounded-2xl border border-sun/50 bg-sun/10 p-5 text-sm text-ink">
-        <p class="font-bold">Per la tua privacy</p>
-        <p class="mt-1 text-muted">Il modulo non salva nulla su questo sito: compone un messaggio che invii tu, su WhatsApp o via email. Non inviare foto di referti o documenti che non servono.</p>
-      </div>
+      <a href="/prenota-ricetta/" class="btn-primary mt-8 !px-6 !py-3.5">Prenota la ricetta <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
     </div>
-
-    <div class="reveal card bg-cream p-5 sm:p-8">
-      <div class="mb-6 grid grid-cols-2 gap-1 rounded-full bg-paper p-1" role="tablist" aria-label="Tipo di richiesta">
-        <button role="tab" aria-selected="true" data-tab="ricetta" class="tab rounded-full px-4 py-2.5 text-sm font-extrabold">Ricetta medica</button>
-        <button role="tab" aria-selected="false" data-tab="prodotto" class="tab rounded-full px-4 py-2.5 text-sm font-extrabold">Prodotto / da banco</button>
+    <ol class="reveal space-y-6">
+      <li class="flex gap-4">
+        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-forest-700 font-display text-lg font-semibold text-white">1</span>
+        <div><p class="font-bold">Inviaci il codice NRE</p><p class="text-muted">È il numero di ricetta elettronica che trovi sul promemoria o nel messaggio del tuo medico.</p></div>
+      </li>
+      <li class="flex gap-4">
+        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-forest-700 font-display text-lg font-semibold text-white">2</span>
+        <div><p class="font-bold">Ti avvisiamo quando è pronto</p><p class="text-muted">Se un farmaco va ordinato ti diciamo subito quando arriva.</p></div>
+      </li>
+      <li class="flex gap-4">
+        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-forest-700 font-display text-lg font-semibold text-white">3</span>
+        <div><p class="font-bold">Ritiri con la tessera sanitaria</p><p class="text-muted">Porta la tessera sanitaria dell'assistito. Puoi delegare un familiare.</p></div>
+      </li>
+    </ol>
+  </div>
+  <div class="mx-auto mt-16 max-w-7xl px-4 sm:px-6">
+    <div class="reveal grid gap-8 overflow-hidden rounded-[32px] bg-forest-50 p-7 ring-1 ring-forest-100 sm:p-10 lg:grid-cols-[1.2fr_1fr] lg:items-center lg:p-14">
+      <div>
+        <p class="eyebrow"><span class="h-px w-6 bg-forest-500"></span>Ordina e ritira</p>
+        <h2 class="mt-3 font-display text-3xl font-semibold leading-tight sm:text-4xl">Ordina su WhatsApp, paga online, ritira da noi.</h2>
+        <p class="mt-4 text-lg text-muted">Cosmetici, integratori, prodotti per l'infanzia e per la casa: li prepariamo noi, tu passi solo a prenderli.</p>
       </div>
-
-      <form id="rxForm" novalidate class="space-y-5">
-        <div class="grid gap-5 sm:grid-cols-2">
-          <div><label class="label" for="rxNome">Nome e cognome</label><input class="field" id="rxNome" name="nome" autocomplete="name" required placeholder="Mario Rossi"></div>
-          <div><label class="label" for="rxTel">Telefono / WhatsApp</label><input class="field" id="rxTel" name="tel" type="tel" autocomplete="tel" inputmode="tel" required placeholder="333 123 4567"></div>
-        </div>
-
-        <div data-pane="ricetta" class="space-y-3">
-          <div class="flex items-center justify-between">
-            <label class="label !mb-0" for="nre0">Codici NRE</label>
-            <span class="text-xs text-muted">15 caratteri, es. 030A0…</span>
-          </div>
-          <div id="nreList" class="space-y-2"></div>
-          <button type="button" id="addNre" class="inline-flex items-center gap-1.5 text-sm font-bold text-forest-600 hover:text-forest-700">
-            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Aggiungi un'altra ricetta
-          </button>
-          <label class="flex items-start gap-3 rounded-xl bg-paper p-3 text-sm">
-            <input type="checkbox" name="delega" class="mt-0.5 h-4 w-4 accent-forest-700">
-            <span>Ritirerà un familiare o un'altra persona (porterà la tessera sanitaria dell'assistito)</span>
-          </label>
-        </div>
-
-        <div data-pane="prodotto" class="hidden">
-          <label class="label" for="rxProd">Cosa ti serve?</label>
-          <textarea class="field min-h-28" id="rxProd" name="prodotto" placeholder="Es. integratore di magnesio, crema solare SPF 50 per bambini, antiparassitario per cane 10–20 kg…"></textarea>
-          <label class="mt-3 flex items-start gap-3 rounded-xl bg-paper p-3 text-sm">
-            <input type="checkbox" name="pagaOnline" class="mt-0.5 h-4 w-4 accent-forest-700" checked>
-            <span>Voglio pagare online: inviatemi il link di pagamento</span>
-          </label>
-        </div>
-
-        <div class="grid gap-5 sm:grid-cols-2">
-          <div>
-            <label class="label" for="rxQuando">Quando passi a ritirare?</label>
-            <select class="field" id="rxQuando" name="quando">
-              <option>Oggi</option><option>Domani</option><option>Nei prossimi giorni</option><option>Ditemi voi quando è pronto</option>
-            </select>
-          </div>
-          <div>
-            <label class="label" for="rxNote">Note (facoltative)</label>
-            <input class="field" id="rxNote" name="note" placeholder="Es. preferisco il generico">
-          </div>
-        </div>
-
-        <label class="flex items-start gap-3 text-sm text-muted">
-          <input type="checkbox" id="rxPrivacy" required class="mt-0.5 h-4 w-4 accent-forest-700">
-          <span>Ho letto l'<button type="button" class="font-bold text-forest-700 underline underline-offset-2" data-open="privacyDlg">informativa privacy</button> e acconsento al trattamento dei dati per preparare la mia richiesta.</span>
-        </label>
-
-        <p id="rxError" class="hidden rounded-xl bg-coral/10 px-4 py-3 text-sm font-semibold text-coral" role="alert"></p>
-
-        <div class="flex flex-col gap-3 sm:flex-row">
-          <button type="submit" data-via="wa" class="btn-wa flex-1 !py-3.5">
-            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-            Invia su WhatsApp
-          </button>
-          <button type="submit" data-via="mail" class="btn-ghost flex-1 !py-3.5">Invia via email</button>
-        </div>
-      </form>
+      <div class="flex flex-wrap gap-3 lg:justify-end">
+        <a href="https://wa.me/393534203900?text=Buongiorno%2C%20vorrei%20fare%20un%20ordine%20da%20ritirare%20in%20farmacia%3A%20" data-wa="Buongiorno, vorrei fare un ordine da ritirare in farmacia: " target="_blank" rel="noopener" class="btn-wa !px-6 !py-3.5 "><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>Ordina su WhatsApp</a>
+        <a href="/ordina-su-whatsapp/" class="btn-ghost !px-6 !py-3.5">Come funziona</a>
+      </div>
     </div>
   </div>
 </section>
 
-
-<!-- ============ ORDINA, PAGA ONLINE, RITIRA ============ -->
-<section id="ordina" class="scroll-mt-24 bg-paper pb-20 lg:pb-28">
+<section class="py-20 lg:py-28">
   <div class="mx-auto max-w-7xl px-4 sm:px-6">
-    <div class="reveal overflow-hidden rounded-[32px] bg-forest-50 ring-1 ring-forest-100">
-      <div class="grid gap-10 p-7 sm:p-10 lg:grid-cols-[1fr_1.3fr] lg:p-14">
-        <div>
-          <p class="eyebrow"><span class="h-px w-6 bg-forest-500"></span>Ordina e ritira</p>
-          <h2 class="h2 mt-3">Ordina su WhatsApp,<br>paga online, ritira da noi.</h2>
-          <p class="mt-4 text-lg text-muted">Cosmetici, integratori, prodotti per l'infanzia e per la casa: li prepariamo noi, tu passi solo a prenderli. Niente code alla cassa.</p>
-          <a data-wa="Buongiorno, vorrei fare un ordine da ritirare in farmacia: " target="_blank" rel="noopener" class="btn-wa mt-7 !px-6 !py-3.5">
-            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-            Ordina su WhatsApp
-          </a>
-          <p class="mt-3 text-sm font-semibold text-muted">WhatsApp <span data-cfg="whatsappLabel"></span></p>
-        </div>
-        <ol class="grid gap-4 sm:grid-cols-3">
-          <li class="rounded-2xl bg-paper p-5">
-            <span class="grid h-10 w-10 place-items-center rounded-full bg-forest-700 font-display text-lg font-semibold text-white">1</span>
-            <p class="mt-4 font-bold">Scrivi cosa ti serve</p>
-            <p class="mt-1 text-sm text-muted">Anche con una foto del prodotto. Ti confermiamo disponibilità e prezzo.</p>
-          </li>
-          <li class="rounded-2xl bg-paper p-5">
-            <span class="grid h-10 w-10 place-items-center rounded-full bg-forest-700 font-display text-lg font-semibold text-white">2</span>
-            <p class="mt-4 font-bold">Paga online</p>
-            <p class="mt-1 text-sm text-muted">Ti inviamo un link di pagamento sicuro, con carta o wallet. Se preferisci, paghi al ritiro.</p>
-          </li>
-          <li class="rounded-2xl bg-paper p-5">
-            <span class="grid h-10 w-10 place-items-center rounded-full bg-forest-700 font-display text-lg font-semibold text-white">3</span>
-            <p class="mt-4 font-bold">Ritira in farmacia</p>
-            <p class="mt-1 text-sm text-muted">Ti avvisiamo quando è pronto: passi, dici il tuo nome e vai.</p>
-          </li>
-          <li class="rounded-2xl border border-line bg-paper/60 p-4 text-sm text-muted sm:col-span-3">
-            <strong class="text-ink">Farmaci:</strong> quelli con ricetta si prenotano dalla sezione <a href="#prenota" class="font-bold text-forest-700 underline underline-offset-2">Prenota ricetta</a> e, come tutti i medicinali, si pagano al ritiro in farmacia, dove il farmacista li consegna con il suo consiglio.
-          </li>
-        </ol>
+    <div class="reveal flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+      <div>
+        <p class="eyebrow"><span class="h-px w-6 bg-forest-500"></span>Reparti</p>
+        <h2 class="h2 mt-3">Oltre al farmaco.</h2>
       </div>
+      <p class="max-w-md text-muted">Prodotti selezionati e consiglio del farmacista. Se non lo abbiamo, lo ordiniamo: di solito arriva entro il giorno dopo.</p>
+    </div>
+    <div class="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+      <a href="/reparti/#dermocosmesi" class="reveal group relative block overflow-hidden rounded-3xl bg-forest-100">
+        <img src="https://images.unsplash.com/photo-1620916297397-a4a5402a3c6c?w=700&h=900&fit=crop&q=70&auto=format" alt="" loading="lazy" class="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-105" width="700" height="900">
+        <span class="absolute inset-0 bg-gradient-to-t from-forest-900/90 via-forest-900/20 to-transparent"></span>
+        <span class="absolute inset-x-0 bottom-0 p-4 text-white sm:p-5">
+          <span class="block font-display text-xl font-semibold sm:text-2xl">Dermocosmesi</span>
+          <span class="mt-1 block text-xs text-white/85 sm:text-sm">Viso, corpo, solari. Consulenza sulla tua pelle.</span>
+        </span>
+      </a>
+      <a href="/reparti/#mamma-infanzia" class="reveal group relative block overflow-hidden rounded-3xl bg-forest-100">
+        <img src="https://images.unsplash.com/photo-1533483595632-c5f0e57a1936?w=700&h=900&fit=crop&q=70&auto=format" alt="" loading="lazy" class="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-105" width="700" height="900">
+        <span class="absolute inset-0 bg-gradient-to-t from-forest-900/90 via-forest-900/20 to-transparent"></span>
+        <span class="absolute inset-x-0 bottom-0 p-4 text-white sm:p-5">
+          <span class="block font-display text-xl font-semibold sm:text-2xl">Mamma e infanzia</span>
+          <span class="mt-1 block text-xs text-white/85 sm:text-sm">Latti, pappe, igiene e benessere del bambino.</span>
+        </span>
+      </a>
+      <a href="/reparti/#veterinaria" class="reveal group relative block overflow-hidden rounded-3xl bg-forest-100">
+        <img src="https://images.unsplash.com/photo-1654895716780-b4664497420d?w=700&h=900&fit=crop&q=70&auto=format" alt="" loading="lazy" class="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-105" width="700" height="900">
+        <span class="absolute inset-0 bg-gradient-to-t from-forest-900/90 via-forest-900/20 to-transparent"></span>
+        <span class="absolute inset-x-0 bottom-0 p-4 text-white sm:p-5">
+          <span class="block font-display text-xl font-semibold sm:text-2xl">Veterinaria</span>
+          <span class="mt-1 block text-xs text-white/85 sm:text-sm">Antiparassitari, farmaci veterinari su ricetta, integratori.</span>
+        </span>
+      </a>
+      <a href="/reparti/#fitoterapia-integratori" class="reveal group relative block overflow-hidden rounded-3xl bg-forest-100">
+        <img src="https://images.unsplash.com/photo-1514733670139-4d87a1941d55?w=700&h=900&fit=crop&q=70&auto=format" alt="" loading="lazy" class="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-105" width="700" height="900">
+        <span class="absolute inset-0 bg-gradient-to-t from-forest-900/90 via-forest-900/20 to-transparent"></span>
+        <span class="absolute inset-x-0 bottom-0 p-4 text-white sm:p-5">
+          <span class="block font-display text-xl font-semibold sm:text-2xl">Fitoterapia e integratori</span>
+          <span class="mt-1 block text-xs text-white/85 sm:text-sm">Fitoterapici, tisane e integratori selezionati.</span>
+        </span>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- ============ DISTRIBUTORE H24 ============ -->
-<section class="mx-auto max-w-7xl px-4 pt-20 sm:px-6 lg:pt-28">
-  <div class="reveal grid items-center gap-8 overflow-hidden rounded-[32px] border border-line bg-paper lg:grid-cols-2">
-    <div class="p-7 sm:p-10 lg:p-14">
-      <span id="h24Badge" class="inline-flex rounded-full bg-sun/20 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-ink">Prossimamente</span>
-      <h2 class="mt-4 font-display text-3xl font-semibold leading-tight sm:text-4xl">Distributore automatico H24</h2>
-      <p class="mt-4 text-lg text-muted" id="h24Text">Stiamo installando sotto il porticato un distributore di prodotti da farmacia, utilizzabile a qualsiasi ora, anche quando siamo chiusi.</p>
-      <ul class="mt-6 grid gap-3 text-[15px] sm:grid-cols-2">
-        <li class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-cross"></span>Aperto 24 ore su 24, 7 giorni su 7</li>
-        <li class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-cross"></span>Carte e pagamenti contactless</li>
-        <li class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-cross"></span>Prodotti conservati sotto i 25 °C</li>
-        <li class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-cross"></span>Da banco, igiene, infanzia</li>
-      </ul>
-    </div>
-    <figure class="relative h-full min-h-72 bg-forest-100" data-foto="foto/vetrina.jpg">
-      <img class="absolute inset-0 h-full w-full object-cover" loading="lazy"
-           src="foto/vetrina.jpg"
-           data-fallback="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?w=1100&q=75&auto=format"
-           alt="Vetrina della farmacia" width="1100" height="700">
+<section class="pb-20 lg:pb-28">
+  <div class="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-16">
+    <figure class="reveal relative overflow-hidden rounded-[32px] bg-forest-100" data-foto="foto/team.jpg">
+      <img class="aspect-[4/3] h-full w-full object-cover" loading="lazy" src="/foto/team.jpg"
+           data-fallback="https://images.unsplash.com/photo-1576091358783-a212ec293ff3?w=1200&q=75&auto=format"
+           alt="I farmacisti della Farmacia Comunale di Canegrate al bancone" width="1200" height="900">
     </figure>
-  </div>
-</section>
-
-<!-- ============ CHI SIAMO ============ -->
-<section id="chi-siamo" class="scroll-mt-24 py-20 lg:py-28">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6">
-    <div class="grid gap-12 lg:grid-cols-2 lg:gap-16">
-      <div class="reveal">
-        <p class="eyebrow"><span class="h-px w-6 bg-forest-500"></span>Chi siamo</p>
-        <h2 class="h2 mt-3">Una farmacia pubblica, nata per il quartiere.</h2>
-        <div class="mt-6 space-y-4 text-lg leading-relaxed text-muted">
-          <p>Siamo la prima farmacia comunale di Canegrate, aperta l'8 ottobre 2026 in Piazza della Musica, nel quartiere Cascinette. Siamo un servizio di prossimità per Canegrate e per i comuni vicini: Legnano, Parabiago, Cerro Maggiore, San Vittore Olona e Nerviano.</p>
-          <p>Farmaci con ricetta e da banco, fitoterapici, integratori, dermocosmesi e articoli per l'infanzia. E poi autoanalisi, ECG e Holter, prenotazioni CUP e consegna a domicilio. Nei prossimi mesi aggiungeremo nuovi servizi.</p>
-        </div>
-        <dl class="mt-10 grid grid-cols-3 gap-4">
-          <div class="card p-5"><dt class="text-xs font-bold uppercase tracking-wider text-muted">Gestione</dt><dd class="mt-2 font-display text-xl font-semibold" data-cfg="gestore"></dd></div>
-          <div class="card p-5"><dt class="text-xs font-bold uppercase tracking-wider text-muted">Dal</dt><dd class="mt-2 font-display text-xl font-semibold">2026</dd></div>
-          <div class="card p-5"><dt class="text-xs font-bold uppercase tracking-wider text-muted">Quartiere</dt><dd class="mt-2 font-display text-xl font-semibold">Cascinette</dd></div>
-        </dl>
-      </div>
-      <figure class="reveal relative overflow-hidden rounded-[32px] bg-forest-100" data-foto="foto/team.jpg">
-        <img class="aspect-[4/3] h-full w-full object-cover" loading="lazy"
-             src="foto/team.jpg"
-             data-fallback="https://images.unsplash.com/photo-1576091358783-a212ec293ff3?w=1200&q=75&auto=format"
-             alt="Farmacista che consiglia una cliente al bancone" width="1200" height="900">
-      </figure>
-    </div>
-
-    <!-- STAFF: sostituisci nomi/ruoli nel CONFIG e carica foto/staff-1.jpg, staff-2.jpg, staff-3.jpg -->
-    <div class="mt-20">
-      <div class="reveal flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
-        <h3 class="font-display text-3xl font-semibold">Il nostro team</h3>
-        <p class="text-muted">Farmacisti abilitati, iscritti all'Ordine di Milano.</p>
-      </div>
-      <div id="staffGrid" class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ DOVE SIAMO E TURNI ============ -->
-<section id="dove" class="scroll-mt-24 bg-forest-900 py-20 text-white lg:py-28">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6">
-    <div class="reveal max-w-2xl">
-      <p class="eyebrow !text-cross"><span class="h-px w-6 bg-cross"></span>Dove siamo e turni</p>
-      <h2 class="mt-3 font-display text-3xl font-semibold leading-tight sm:text-[42px]">Ci trovi sotto il porticato,<br>nel cuore delle Cascinette.</h2>
-    </div>
-
-    <div class="mt-10 grid gap-5 lg:grid-cols-[1fr_1.15fr]">
-      <!-- Orari -->
-      <div class="reveal rounded-3xl bg-white/5 p-6 ring-1 ring-white/10 sm:p-8">
-        <div class="flex items-start justify-between gap-4">
-          <div>
-            <p class="text-sm font-bold uppercase tracking-wider text-forest-100/70">Indirizzo</p>
-            <p class="mt-1 text-xl font-bold" data-cfg="indirizzo"></p>
-          </div>
-          <span class="status-pill-dark shrink-0 rounded-full px-3 py-1 text-xs font-extrabold uppercase tracking-wider">…</span>
-        </div>
-        <p class="status-long-dark mt-4 text-forest-100"></p>
-        <table class="mt-6 w-full text-[15px]" aria-label="Orari settimanali">
-          <tbody id="hoursTable"></tbody>
-        </table>
-        <ul id="comodita" class="mt-6 flex flex-wrap gap-2" aria-label="Servizi e comodità"></ul>
-        <p id="holidayNote" class="mt-4 hidden rounded-xl bg-sun/15 px-4 py-3 text-sm text-sun"></p>
-        <div class="mt-6 flex flex-wrap gap-3">
-          <a data-href="maps" target="_blank" rel="noopener" class="btn bg-white text-forest-700 hover:bg-forest-50">Indicazioni stradali</a>
-          <a data-href="tel" class="btn border border-white/25 text-white hover:bg-white/10">Chiama</a>
-        </div>
-      </div>
-
-      <!-- Mappa (si carica solo al clic: niente cookie di terze parti prima del consenso) -->
-      <div class="reveal relative min-h-80 overflow-hidden rounded-3xl bg-forest-700 ring-1 ring-white/10" id="mapBox">
-        <div id="mapPlaceholder" class="absolute inset-0 grid place-items-center p-6 text-center"
-             style="background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,.12) 1px, transparent 0);background-size:22px 22px">
-          <div>
-            <span class="mx-auto grid h-14 w-14 place-items-center rounded-full bg-cross text-forest-900">
-              <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-            </span>
-            <p class="mt-4 text-lg font-bold" data-cfg="indirizzo"></p>
-            <button id="loadMap" class="btn mt-5 bg-white text-forest-700 hover:bg-forest-50">Mostra la mappa</button>
-            <p class="mt-3 text-xs text-forest-100/70">La mappa è fornita da Google: caricandola accetti i suoi cookie.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Turni -->
-    <div id="turni" class="mt-5 scroll-mt-28 grid gap-5 lg:grid-cols-[1fr_1.15fr]">
-      <div class="reveal rounded-3xl bg-cross p-6 text-forest-900 sm:p-8">
-        <p class="text-sm font-extrabold uppercase tracking-wider">Farmacia di turno</p>
-        <p id="turnoToday" class="mt-2 font-display text-2xl font-semibold leading-snug">Oggi non siamo di turno.</p>
-        <p id="turnoNext" class="mt-2 text-[15px] font-semibold text-forest-900/80"></p>
-      </div>
-      <div class="reveal rounded-3xl bg-white/5 p-6 ring-1 ring-white/10 sm:p-8">
-        <p class="font-bold">Chi è aperto adesso a Canegrate e Legnano?</p>
-        <p class="mt-1 text-forest-100">I turni di notte e nei festivi sono stabiliti da ATS. Controlla sempre il servizio ufficiale prima di uscire.</p>
-        <div class="mt-5 flex flex-wrap gap-3">
-          <a data-href="turniUrl" target="_blank" rel="noopener" class="btn bg-white text-forest-700 hover:bg-forest-50">Farmacie di turno vicino a te</a>
-          <a href="https://www.farmacia-aperta.eu" target="_blank" rel="noopener" class="btn border border-white/25 text-white hover:bg-white/10">App Farmacia Aperta</a>
-        </div>
-        <p class="mt-4 text-sm text-forest-100/70">Emergenze: chiama il <a href="tel:112" class="font-bold text-white underline">112</a>. Guardia medica: <a href="tel:116117" class="font-bold text-white underline">116117</a>.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ FAQ ============ -->
-<section class="mx-auto max-w-4xl px-4 py-20 sm:px-6 lg:py-28" aria-labelledby="faqTitle">
-  <div class="reveal text-center">
-    <p class="eyebrow justify-center"><span class="h-px w-6 bg-forest-500"></span>Domande frequenti</p>
-    <h2 id="faqTitle" class="h2 mt-3">Le risposte che cerchi più spesso</h2>
-  </div>
-  <div class="mt-10 space-y-3" id="faqList"></div>
-</section>
-
-<!-- ============ CONTATTI ============ -->
-<section id="contatti" class="scroll-mt-24 bg-paper py-20 lg:py-28">
-  <div class="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16">
     <div class="reveal">
-      <p class="eyebrow"><span class="h-px w-6 bg-forest-500"></span>Contatti</p>
-      <h2 class="h2 mt-3">Scrivici, chiamaci,<br>o passa a trovarci.</h2>
-      <div class="mt-10 grid gap-3">
-        <a data-href="tel" class="card flex items-center gap-4 p-5 transition hover:border-forest-500">
-          <span class="grid h-12 w-12 place-items-center rounded-xl bg-forest-50 text-forest-700"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-          <span><span class="block text-sm text-muted">Telefono</span><span class="block text-lg font-bold" data-cfg="telefono"></span></span>
-        </a>
-        <a data-wa="Buongiorno, vorrei un'informazione." data-wa-only target="_blank" rel="noopener" class="card flex items-center gap-4 p-5 transition hover:border-forest-500">
-          <span class="grid h-12 w-12 place-items-center rounded-xl bg-forest-500 text-white"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span>
-          <span><span class="block text-sm text-muted">WhatsApp</span><span class="block text-lg font-bold" data-cfg="whatsappLabel"></span></span>
-        </a>
-        <a data-href="mail" class="card flex items-center gap-4 p-5 transition hover:border-forest-500">
-          <span class="grid h-12 w-12 place-items-center rounded-xl bg-forest-50 text-forest-700"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
-          <span class="min-w-0"><span class="block text-sm text-muted">Email</span><span class="block truncate text-lg font-bold" data-cfg="email"></span></span>
-        </a>
+      <p class="eyebrow"><span class="h-px w-6 bg-forest-500"></span>Chi siamo</p>
+      <h2 class="h2 mt-3">Una farmacia pubblica, nata per il quartiere.</h2>
+      <p class="mt-6 text-lg leading-relaxed text-muted">Siamo la prima farmacia comunale di Canegrate, aperta l'8 ottobre 2026 in Piazza della Musica, nel quartiere Cascinette: un servizio di prossimità per Canegrate e per i comuni vicini, da Legnano, Parabiago, Cerro Maggiore, San Vittore Olona a Nerviano.</p>
+      <a href="/chi-siamo/" class="btn-ghost mt-8">Conosci la farmacia <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<section class="bg-forest-900 py-20 text-white lg:py-28">
+  <div class="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_1.1fr]">
+    <div class="reveal">
+      <p class="eyebrow !text-cross"><span class="h-px w-6 bg-cross"></span>Orari e dove siamo</p>
+      <h2 class="mt-3 font-display text-3xl font-semibold leading-tight sm:text-[42px]">Ci trovi sotto il porticato, nel cuore delle Cascinette.</h2>
+      <address class="mt-6 text-xl font-bold not-italic">Piazza della Musica, 6 · 20039 Canegrate (MI)</address>
+      <p class="status-long-dark mt-3 text-forest-100"></p>
+      <ul class="mt-6 flex flex-wrap gap-2" aria-label="Comodità"><li class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-sm"><span class="h-1.5 w-1.5 rounded-full bg-cross"></span>Parcheggio gratuito</li><li class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-sm"><span class="h-1.5 w-1.5 rounded-full bg-cross"></span>Ingresso accessibile in carrozzina</li><li class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-sm"><span class="h-1.5 w-1.5 rounded-full bg-cross"></span>Bagno accessibile</li><li class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-sm"><span class="h-1.5 w-1.5 rounded-full bg-cross"></span>Dispositivi di ascolto assistito</li><li class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-sm"><span class="h-1.5 w-1.5 rounded-full bg-cross"></span>Pagamento con carte e contactless</li><li class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-sm"><span class="h-1.5 w-1.5 rounded-full bg-cross"></span>Consegna a domicilio</li></ul>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="/orari-e-dove-siamo/" class="btn bg-white text-forest-700 hover:bg-forest-50">Orari e mappa</a>
+        <a href="/farmacia-di-turno/" class="btn border border-white/25 text-white hover:bg-white/10">Farmacia di turno</a>
       </div>
     </div>
+    <div class="reveal rounded-3xl bg-white/5 p-6 ring-1 ring-white/10 sm:p-8">
+      <div class="flex items-center justify-between gap-4">
+        <h3 class="text-lg font-bold">Orari di apertura</h3>
+        <span class="status-pill-dark shrink-0 rounded-full bg-white/10 px-3 py-1 text-xs font-extrabold uppercase tracking-wider">Orari</span>
+      </div>
+      <table class="mt-4 w-full text-[15px]"><caption class="sr-only">Orari settimanali</caption><tbody data-hours-table="dark"><tr><th scope="row" class="rounded-l-lg py-2.5 pl-3 text-left font-semibold">Lunedì</th><td class="rounded-r-lg py-2.5 pr-3 text-right tabular-nums ">8:00–12:30 · 15:00–19:30</td></tr><tr><th scope="row" class="rounded-l-lg py-2.5 pl-3 text-left font-semibold">Martedì</th><td class="rounded-r-lg py-2.5 pr-3 text-right tabular-nums ">8:00–12:30 · 15:00–19:30</td></tr><tr><th scope="row" class="rounded-l-lg py-2.5 pl-3 text-left font-semibold">Mercoledì</th><td class="rounded-r-lg py-2.5 pr-3 text-right tabular-nums ">8:00–12:30 · 15:00–19:30</td></tr><tr><th scope="row" class="rounded-l-lg py-2.5 pl-3 text-left font-semibold">Giovedì</th><td class="rounded-r-lg py-2.5 pr-3 text-right tabular-nums ">8:00–12:30 · 15:00–19:30</td></tr><tr><th scope="row" class="rounded-l-lg py-2.5 pl-3 text-left font-semibold">Venerdì</th><td class="rounded-r-lg py-2.5 pr-3 text-right tabular-nums ">8:00–12:30 · 15:00–19:30</td></tr><tr><th scope="row" class="rounded-l-lg py-2.5 pl-3 text-left font-semibold">Sabato</th><td class="rounded-r-lg py-2.5 pr-3 text-right tabular-nums ">9:00–12:30 · 15:00–18:00</td></tr><tr><th scope="row" class="rounded-l-lg py-2.5 pl-3 text-left font-semibold">Domenica</th><td class="rounded-r-lg py-2.5 pr-3 text-right tabular-nums text-forest-100/60">Chiuso</td></tr></tbody></table>
+    </div>
+  </div>
+</section>
 
-    <form id="msgForm" class="reveal card bg-cream p-5 sm:p-8" novalidate>
-      <h3 class="font-display text-2xl font-semibold">Fai una domanda al farmacista</h3>
-      <p class="mt-1 text-sm text-muted">Ti rispondiamo negli orari di apertura. Per urgenze chiama.</p>
-      <div class="mt-6 space-y-5">
-        <div class="grid gap-5 sm:grid-cols-2">
-          <div><label class="label" for="mNome">Nome</label><input class="field" id="mNome" autocomplete="name" required></div>
-          <div><label class="label" for="mTel">Telefono</label><input class="field" id="mTel" type="tel" autocomplete="tel" inputmode="tel"></div>
-        </div>
-        <div>
-          <label class="label" for="mArg">Argomento</label>
-          <select class="field" id="mArg"><option>Informazioni su un prodotto</option><option>Prenotare un servizio</option><option>Disponibilità di un farmaco</option><option>Altro</option></select>
-        </div>
-        <div><label class="label" for="mTesto">Messaggio</label><textarea class="field min-h-32" id="mTesto" required></textarea></div>
-        <label class="flex items-start gap-3 text-sm text-muted">
-          <input type="checkbox" id="mPrivacy" required class="mt-0.5 h-4 w-4 accent-forest-700">
-          <span>Accetto l'<button type="button" class="font-bold text-forest-700 underline underline-offset-2" data-open="privacyDlg">informativa privacy</button>.</span>
-        </label>
-        <p id="mError" class="hidden rounded-xl bg-coral/10 px-4 py-3 text-sm font-semibold text-coral" role="alert"></p>
-        <div class="flex flex-col gap-3 sm:flex-row">
-          <button type="submit" data-via="wa" class="btn-wa flex-1">Invia su WhatsApp</button>
-          <button type="submit" data-via="mail" class="btn-ghost flex-1">Invia via email</button>
+
+<section class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:py-20" aria-labelledby="faq-titolo">
+  <h2 id="faq-titolo" class="h2 text-center">Le risposte che cerchi più spesso</h2>
+  <div class="mt-10 space-y-3">
+    <details class="group card px-6 py-5 open:border-forest-500">
+      <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-bold [&::-webkit-details-marker]:hidden"><h3 class="text-lg font-bold">Cos&#39;è il codice NRE e dove lo trovo?</h3>
+        <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-forest-50 text-forest-700 transition group-open:rotate-45"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+      </summary>
+      <p class="mt-3 leading-relaxed text-muted">È il Numero di Ricetta Elettronica: un codice di 15 caratteri stampato sul promemoria cartaceo o inviato dal medico via SMS, email o app. Puoi trovare le tue ricette anche nel Fascicolo Sanitario Elettronico.</p>
+    </details>
+    <details class="group card px-6 py-5 open:border-forest-500">
+      <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-bold [&::-webkit-details-marker]:hidden"><h3 class="text-lg font-bold">Posso ritirare i farmaci per un familiare?</h3>
+        <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-forest-50 text-forest-700 transition group-open:rotate-45"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+      </summary>
+      <p class="mt-3 leading-relaxed text-muted">Sì. Porta la tessera sanitaria della persona a cui è intestata la ricetta. Per alcuni farmaci può servire anche un documento di chi ritira.</p>
+    </details>
+    <details class="group card px-6 py-5 open:border-forest-500">
+      <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-bold [&::-webkit-details-marker]:hidden"><h3 class="text-lg font-bold">Devo prenotare per glicemia o pressione?</h3>
+        <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-forest-50 text-forest-700 transition group-open:rotate-45"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+      </summary>
+      <p class="mt-3 leading-relaxed text-muted">No, le misurazioni rapide si fanno al bancone negli orari di apertura. Per ECG, Holter ed emoglobina glicata è meglio prenotare.</p>
+    </details>
+    <details class="group card px-6 py-5 open:border-forest-500">
+      <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-bold [&::-webkit-details-marker]:hidden"><h3 class="text-lg font-bold">L&#39;ECG in farmacia è gratuito?</h3>
+        <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-forest-50 text-forest-700 transition group-open:rotate-45"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+      </summary>
+      <p class="mt-3 leading-relaxed text-muted">Dipende. In Lombardia ECG e Holter in farmacia sono gratuiti per chi rientra nei requisiti regionali, per esempio con esenzione per patologia cardiovascolare e prescrizione del medico. Negli altri casi sono a pagamento: chiedici la tariffa.</p>
+    </details>
+    <details class="group card px-6 py-5 open:border-forest-500">
+      <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-bold [&::-webkit-details-marker]:hidden"><h3 class="text-lg font-bold">Se il farmaco non c&#39;è, quanto tempo serve?</h3>
+        <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-forest-50 text-forest-700 transition group-open:rotate-45"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+      </summary>
+      <p class="mt-3 leading-relaxed text-muted">Di solito lo ordiniamo e arriva entro il giorno lavorativo successivo. Ti scriviamo su WhatsApp appena è pronto.</p>
+    </details>
+  </div>
+</section>
+<p class="-mt-10 mb-20 text-center"><a href="/domande-frequenti/" class="font-bold text-forest-700 underline underline-offset-2">Tutte le domande frequenti</a></p>
+
+<section class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:pb-28">
+  <div class="overflow-hidden rounded-[32px] bg-forest-900 text-white">
+    <div class="grid gap-8 p-7 sm:p-10 lg:grid-cols-[1.3fr_1fr] lg:p-14">
+      <div>
+        <h2 class="font-display text-3xl font-semibold leading-tight sm:text-4xl">Hai una domanda? Chiedi al farmacista.</h2>
+        <p class="mt-4 max-w-xl text-forest-100">Scrivici su WhatsApp o chiamaci negli orari di apertura: ti rispondiamo noi, non un call center.</p>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href="https://wa.me/393534203900?text=Buongiorno%2C%20vorrei%20un&#39;informazione." data-wa="Buongiorno, vorrei un&#39;informazione." target="_blank" rel="noopener" class="btn-wa !px-6 !py-3.5 "><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>Scrivici su WhatsApp</a>
+          <a href="tel:0331725821" data-href="tel" class="btn border border-white/25 !px-6 !py-3.5 text-white hover:bg-white/10"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>0331 725821</a>
         </div>
       </div>
-    </form>
+      <div class="rounded-3xl bg-white/5 p-6 ring-1 ring-white/10">
+        <p class="text-sm font-bold uppercase tracking-wider text-forest-100/70">Dove siamo</p>
+        <p class="mt-1 text-lg font-bold">Piazza della Musica, 6, Canegrate</p>
+        <p class="text-forest-100">Quartiere Cascinette, sotto il porticato · parcheggio gratuito</p>
+        <p class="mt-4 text-sm font-bold uppercase tracking-wider text-forest-100/70">Oggi</p>
+        <p class="today-hours mt-1 text-lg font-bold">8:00–12:30 · 15:00–19:30</p>
+        <a href="/orari-e-dove-siamo/" class="mt-4 inline-flex items-center gap-1.5 text-sm font-extrabold text-cross hover:text-white">Orari e indicazioni <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
   </div>
 </section>
 </main>
 
-<!-- ============ FOOTER ============ -->
 <footer class="bg-forest-900 pb-28 pt-14 text-forest-100 lg:pb-14">
-  <div class="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 md:grid-cols-3">
+  <div class="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 md:grid-cols-2 lg:grid-cols-4">
     <div>
-      <div class="flex items-center gap-3">
+      <a href="/" class="flex items-center gap-3">
         <span class="grid h-10 w-10 place-items-center rounded-xl bg-white/10"><svg viewBox="0 0 32 32" class="h-6 w-6" aria-hidden="true"><path d="M13 5h6v8h8v6h-8v8h-6v-8H5v-6h8z" fill="#34C27A"/></svg></span>
         <span class="font-display text-lg font-semibold text-white">Farmacia Comunale Canegrate</span>
-      </div>
-      <p class="mt-4 text-sm" data-cfg="indirizzo"></p>
-      <p class="mt-1 text-sm">Tel. <a data-href="tel" class="hover:text-white"><span data-cfg="telefono"></span></a></p>
-      <p class="mt-3 text-xs text-forest-100/70">Gestita da <span data-cfg="gestore"></span> · P. IVA <span data-cfg="piva"></span><br>Sede legale: <span data-cfg="sedeLegale"></span></p>
+      </a>
+      <address class="mt-4 text-sm not-italic">Piazza della Musica, 6<br>20039 Canegrate (MI) · quartiere Cascinette</address>
+      <p class="mt-2 text-sm">Tel. <a href="tel:0331725821" data-href="tel" class="font-bold hover:text-white">0331 725821</a></p>
+      <p class="mt-1 text-sm">WhatsApp <a href="https://wa.me/393534203900?text=Buongiorno%2C%20vorrei%20un&#39;informazione." data-wa="Buongiorno, vorrei un&#39;informazione." target="_blank" rel="noopener" class="font-bold hover:text-white">+39 353 420 3900</a></p>
+      <p class="mt-4 text-xs text-forest-100/70">Gestita da Farma Point Srl · P. IVA 14318590966<br>Sede legale: Via E. Toti, 42 · 20039 Canegrate (MI)</p>
     </div>
     <div class="text-sm">
       <p class="font-bold text-white">Orari</p>
-      <ul id="footerHours" class="mt-3 space-y-1"></ul>
+      <table class="mt-3 w-full"><tbody data-hours-list><tr><th scope="row" class="py-0.5 text-left font-normal">Lunedì</th><td class="py-0.5 text-right tabular-nums">8:00–12:30 · 15:00–19:30</td></tr><tr><th scope="row" class="py-0.5 text-left font-normal">Martedì</th><td class="py-0.5 text-right tabular-nums">8:00–12:30 · 15:00–19:30</td></tr><tr><th scope="row" class="py-0.5 text-left font-normal">Mercoledì</th><td class="py-0.5 text-right tabular-nums">8:00–12:30 · 15:00–19:30</td></tr><tr><th scope="row" class="py-0.5 text-left font-normal">Giovedì</th><td class="py-0.5 text-right tabular-nums">8:00–12:30 · 15:00–19:30</td></tr><tr><th scope="row" class="py-0.5 text-left font-normal">Venerdì</th><td class="py-0.5 text-right tabular-nums">8:00–12:30 · 15:00–19:30</td></tr><tr><th scope="row" class="py-0.5 text-left font-normal">Sabato</th><td class="py-0.5 text-right tabular-nums">9:00–12:30 · 15:00–18:00</td></tr><tr><th scope="row" class="py-0.5 text-left font-normal">Domenica</th><td class="py-0.5 text-right tabular-nums">Chiuso</td></tr></tbody></table>
+      <p class="mt-3"><a href="/farmacia-di-turno/" class="font-bold hover:text-white">Farmacia di turno →</a></p>
     </div>
     <div class="text-sm">
-      <p class="font-bold text-white">Link utili</p>
+      <p class="font-bold text-white">Servizi</p>
       <ul class="mt-3 space-y-2">
-        <li><a class="hover:text-white" href="https://www.fascicolosanitario.regione.lombardia.it" target="_blank" rel="noopener">Fascicolo Sanitario Elettronico Lombardia</a></li>
-        <li><a class="hover:text-white" data-href="turniUrl" target="_blank" rel="noopener">Farmacie di turno</a></li>
-        <li><button type="button" class="hover:text-white" data-open="privacyDlg">Privacy e cookie</button></li>
+        <li><a class="hover:text-white" href="/servizi/misurazione-pressione/">Misurazione della pressione</a></li>
+        <li><a class="hover:text-white" href="/servizi/elettrocardiogramma-ecg/">Elettrocardiogramma (ECG)</a></li>
+        <li><a class="hover:text-white" href="/servizi/holter-cardiaco/">Holter cardiaco 24h</a></li>
+        <li><a class="hover:text-white" href="/servizi/holter-pressorio/">Holter pressorio 24h</a></li>
+        <li><a class="hover:text-white" href="/servizi/prenotazione-cup/">Prenotazione visite ed esami (CUP)</a></li>
+        <li><a class="hover:text-white" href="/servizi/consegna-a-domicilio/">Consegna a domicilio</a></li>
+        <li><a class="hover:text-white" href="/servizi/">Tutti i servizi</a></li>
+      </ul>
+    </div>
+    <div class="text-sm">
+      <p class="font-bold text-white">La farmacia</p>
+      <ul class="mt-3 space-y-2">
+        <li><a class="hover:text-white" href="/prenota-ricetta/">Prenota la ricetta</a></li>
+        <li><a class="hover:text-white" href="/ordina-su-whatsapp/">Ordina su WhatsApp e ritira</a></li>
+        <li><a class="hover:text-white" href="/reparti/">Reparti e prodotti</a></li>
+        <li><a class="hover:text-white" href="/chi-siamo/">Chi siamo</a></li>
+        <li><a class="hover:text-white" href="/orari-e-dove-siamo/">Orari e dove siamo</a></li>
+        <li><a class="hover:text-white" href="/domande-frequenti/">Domande frequenti</a></li>
+        <li><a class="hover:text-white" href="/contatti/">Contatti</a></li>
+        <li><a class="hover:text-white" href="/privacy/">Privacy e cookie</a></li>
+        <li><a class="hover:text-white" href="https://www.fascicolosanitario.regione.lombardia.it/" target="_blank" rel="noopener">Fascicolo Sanitario Lombardia ↗</a></li>
       </ul>
     </div>
   </div>
-  <p class="mx-auto mt-10 max-w-7xl px-4 text-xs text-forest-100/60 sm:px-6">© <span id="year"></span> Farmacia Comunale Canegrate. Le informazioni del sito non sostituiscono il parere del medico. Foto di esempio: Unsplash.</p>
+  <p class="mx-auto mt-10 max-w-7xl px-4 text-xs text-forest-100/60 sm:px-6">© <span class="year">2026</span> Farmacia Comunale Canegrate. Le informazioni del sito non sostituiscono il parere del medico. Alcune foto di esempio: Unsplash.</p>
 </footer>
 
-<!-- Barra azioni mobile -->
-<nav class="fixed inset-x-3 bottom-3 z-40 grid grid-cols-3 gap-2 rounded-2xl border border-line bg-paper/95 p-2 shadow-2xl backdrop-blur lg:hidden" aria-label="Azioni rapide mobile">
-  <a data-href="tel" class="flex flex-col items-center gap-1 rounded-xl py-2 text-xs font-bold text-ink"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Chiama</a>
-  <a data-wa="Buongiorno, vorrei un'informazione." target="_blank" rel="noopener" class="flex flex-col items-center gap-1 rounded-xl bg-forest-500 py-2 text-xs font-bold text-white"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>WhatsApp</a>
-  <a data-href="maps" target="_blank" rel="noopener" class="flex flex-col items-center gap-1 rounded-xl py-2 text-xs font-bold text-ink"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Indicazioni</a>
+<nav class="fixed inset-x-3 bottom-3 z-40 grid grid-cols-3 gap-2 rounded-2xl border border-line bg-paper/95 p-2 shadow-2xl backdrop-blur lg:hidden" aria-label="Azioni rapide">
+  <a href="tel:0331725821" data-href="tel" class="flex flex-col items-center gap-1 rounded-xl py-2 text-xs font-bold text-ink"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Chiama</a>
+  <a href="https://wa.me/393534203900?text=Buongiorno%2C%20vorrei%20un&#39;informazione." data-wa="Buongiorno, vorrei un&#39;informazione." target="_blank" rel="noopener" class="flex flex-col items-center gap-1 rounded-xl bg-forest-500 py-2 text-xs font-bold text-white"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>WhatsApp</a>
+  <a href="https://www.google.com/maps/search/?api=1&amp;query=Farmacia%20Comunale%20Canegrate%2C%20Piazza%20della%20Musica%206%2C%2020039%20Canegrate%20MI" target="_blank" rel="noopener" class="flex flex-col items-center gap-1 rounded-xl py-2 text-xs font-bold text-ink"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Indicazioni</a>
 </nav>
-
-<!-- Pulsante WhatsApp flottante (desktop) -->
-<a data-wa="Buongiorno, vorrei un'informazione." target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp"
-   class="fixed bottom-6 right-6 z-40 hidden h-14 items-center gap-2 rounded-full bg-forest-500 pl-4 pr-5 font-bold text-white shadow-[0_12px_30px_-8px_rgba(35,152,92,.7)] transition hover:bg-forest-600 lg:inline-flex">
-  <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-  WhatsApp
-</a>
-
-<!-- Toast -->
+<a href="https://wa.me/393534203900?text=Buongiorno%2C%20vorrei%20un&#39;informazione." data-wa="Buongiorno, vorrei un&#39;informazione." target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp"
+   class="fixed bottom-6 right-6 z-40 hidden h-14 items-center gap-2 rounded-full bg-forest-500 pl-4 pr-5 font-bold text-white shadow-[0_12px_30px_-8px_rgba(35,152,92,.7)] transition hover:bg-forest-600 lg:inline-flex"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>WhatsApp</a>
 <div id="toast" class="pointer-events-none fixed inset-x-0 top-20 z-[60] flex justify-center px-4 opacity-0 transition" role="status" aria-live="polite">
   <div class="rounded-full bg-forest-900 px-5 py-3 text-sm font-bold text-white shadow-xl"></div>
 </div>
-
-<!-- Informativa privacy (testo base: fallo verificare dal vostro consulente privacy) -->
-<dialog id="privacyDlg" class="m-auto w-[min(640px,calc(100%-2rem))] rounded-3xl p-0 text-ink">
-  <div class="max-h-[80vh] overflow-y-auto p-6 sm:p-8">
-    <h2 class="font-display text-2xl font-semibold">Informativa privacy e cookie</h2>
-    <div class="mt-4 space-y-3 text-[15px] leading-relaxed text-muted">
-      <p><strong class="text-ink">Titolare del trattamento:</strong> <span data-cfg="gestore"></span>, P. IVA <span data-cfg="piva"></span>, sede legale <span data-cfg="sedeLegale"></span>. Contatto: <span data-cfg="email"></span>.</p>
-      <p><strong class="text-ink">Quali dati:</strong> nome, telefono e i codici delle ricette o i prodotti che ci comunichi volontariamente via WhatsApp o email. I pagamenti online avvengono sulla pagina sicura del fornitore del servizio di pagamento: la farmacia non riceve i dati della tua carta. Questo sito non salva i dati dei moduli: li usi tu per comporre il messaggio.</p>
-      <p><strong class="text-ink">Perché:</strong> per preparare i farmaci e i prodotti richiesti e per ricontattarti. Base giuridica: il tuo consenso e l'esecuzione della richiesta (art. 6 e 9 GDPR).</p>
-      <p><strong class="text-ink">Per quanto tempo:</strong> il tempo necessario a evadere la richiesta e agli obblighi di legge.</p>
-      <p><strong class="text-ink">Cookie:</strong> il sito non usa cookie di profilazione né statistiche. La mappa di Google e i caratteri tipografici sono forniti da servizi esterni; la mappa si carica solo se la richiedi.</p>
-      <p><strong class="text-ink">I tuoi diritti:</strong> accesso, rettifica, cancellazione, limitazione e reclamo al Garante Privacy (garanteprivacy.it).</p>
-    </div>
-    <form method="dialog" class="mt-6"><button class="btn-primary">Ho capito</button></form>
-  </div>
-</dialog>
-
-<script>
-/* =====================================================================
-   CONFIG — MODIFICA QUI I DATI DELLA FARMACIA
-   I valori segnati "DA VERIFICARE" sono esempi: sostituiscili prima
-   della pubblicazione.
-   ===================================================================== */
-const CONFIG = {
-  /* Dati verificati il 13/10/2026 dal profilo Google dell'attività e da farmaciediturno.org */
-  nome: "Farmacia Comunale Canegrate",
-  gestore: "Farma Point Srl",
-  piva: "14318590966",
-  sedeLegale: "Via E. Toti, 42 · 20039 Canegrate (MI)",
-  indirizzo: "Piazza della Musica, 6 · 20039 Canegrate (MI)",
-  indirizzoBreve: "Piazza della Musica 6, quartiere Cascinette",
-  mapsQuery: "Farmacia Comunale Canegrate, Piazza della Musica 6, 20039 Canegrate MI",
-  telefono: "0331 725821",
-  /* WhatsApp: numero con prefisso 39, senza spazi né +.
-     Lasciando "" i pulsanti WhatsApp diventano pulsanti "Chiama". */
-  whatsapp: "393534203900",
-  email: "",                           // nessuna email pubblica trovata: aggiungila qui (es. una Gmail gratuita)
-  apertura: "Aperta dall'8 ottobre 2026",
-  turniUrl: "https://www.farmaciediturno.org/comune.asp?cod=15046",
-  /* Recensioni Google (aggiorna ogni tanto il numero) */
-  google: { voto: "5,0", recensioni: 31, url: "https://www.google.com/maps/search/?api=1&query=Farmacia+Comunale+Canegrate+Piazza+della+Musica+6" },
-
-  /* Orari: 0 = domenica, 1 = lunedì … 6 = sabato. [] = chiuso. */
-  orari: {
-    1: [["08:00","12:30"],["15:00","19:30"]],
-    2: [["08:00","12:30"],["15:00","19:30"]],
-    3: [["08:00","12:30"],["15:00","19:30"]],
-    4: [["08:00","12:30"],["15:00","19:30"]],
-    5: [["08:00","12:30"],["15:00","19:30"]],
-    6: [["09:00","12:30"],["15:00","18:00"]],
-    0: []
-  },
-  /* Giorni in cui la farmacia è DI TURNO (formato AAAA-MM-GG) e orario del turno */
-  turni: [
-    // { data: "2026-11-01", orari: [["08:00","20:00"]] },
-  ],
-  /* Chiusure straordinarie (ferie, inventario…) */
-  chiusure: [
-    // "2026-12-26",
-  ],
-  /* Distributore H24: metti true quando è installato e funzionante */
-  distributoreAttivo: false,
-
-  /* Comodità (dal profilo Google) */
-  comodita: ["Parcheggio gratuito", "Ingresso accessibile in carrozzina", "Bagno accessibile", "Dispositivi di ascolto assistito", "Pagamento con carte e contactless", "Consegna a domicilio"],
-
-  /* Team: inserisci i nomi (o lascia "" per mostrare solo il ruolo).
-     Foto: carica foto/staff-1.jpg, staff-2.jpg, staff-3.jpg */
-  staff: [
-    { nome: "", ruolo: "Direttore di farmacia", foto: "foto/staff-1.jpg" },
-    { nome: "", ruolo: "Farmacista · dermocosmesi e consiglio", foto: "foto/staff-2.jpg" },
-    { nome: "", ruolo: "Farmacista · servizi e telemedicina", foto: "foto/staff-3.jpg" }
-  ]
-};
-
-/* Servizi: "stato" può essere "attivo", "prenota" (su appuntamento) o "presto" (in arrivo) */
-const SERVIZI = [
-  { cat:"analisi", icona:"drop",   titolo:"Glicemia", testo:"Risultato in pochi minuti con una goccia di sangue dal polpastrello.", stato:"attivo" },
-  { cat:"analisi", icona:"tube",   titolo:"Colesterolo e trigliceridi", testo:"Colesterolo e trigliceridi per tenere d'occhio la salute del cuore.", stato:"attivo" },
-  { cat:"analisi", icona:"gauge",  titolo:"Misurazione della pressione", testo:"Pressione arteriosa e frequenza cardiaca, senza appuntamento.", stato:"attivo" },
-  { cat:"analisi", icona:"tube",   titolo:"Emoglobina glicata (HbA1c)", testo:"Il valore medio della glicemia degli ultimi tre mesi, utile per chi ha il diabete.", stato:"presto" },
-  { cat:"telemedicina", icona:"heart", titolo:"Elettrocardiogramma (ECG)", testo:"Tracciato in farmacia, referto del cardiologo in telemedicina.", stato:"prenota" },
-  { cat:"telemedicina", icona:"pulse", titolo:"Holter cardiaco 24h", testo:"Monitoraggio del battito per 24 ore mentre fai la tua vita normale.", stato:"prenota" },
-  { cat:"telemedicina", icona:"gauge", titolo:"Holter pressorio 24h", testo:"Pressione registrata a intervalli per 24 ore, con referto medico.", stato:"prenota" },
-  { cat:"prevenzione", icona:"tube",    titolo:"Test e tamponi diagnostici", testo:"Test rapidi e tamponi in farmacia, con risultato in pochi minuti.", stato:"prenota" },
-  { cat:"prevenzione", icona:"syringe", titolo:"Vaccino antinfluenzale", testo:"Somministrazione in farmacia da parte di farmacisti formati, nella stagione vaccinale.", stato:"presto" },
-  { cat:"prevenzione", icona:"wind",    titolo:"Spirometria", testo:"Valuta la funzionalità respiratoria in pochi minuti.", stato:"presto" },
-  { cat:"pratiche", icona:"calendar", titolo:"Prenotazione visite ed esami (CUP)", testo:"Prenotiamo per te visite ed esami del Servizio sanitario regionale.", stato:"attivo" },
-  { cat:"pratiche", icona:"truck",    titolo:"Consegna a domicilio", testo:"Per chi non può muoversi: portiamo farmaci e prodotti a casa.", stato:"attivo" },
-  { cat:"pratiche", icona:"file",     titolo:"Ordina su WhatsApp, ritira in farmacia", testo:"Scrivici cosa ti serve, paga online con il link che ti inviamo e passa a ritirare.", stato:"attivo" },
-  { cat:"pratiche", icona:"user",     titolo:"Scelta e revoca del medico", testo:"Cambia il medico di famiglia senza andare agli sportelli ASST.", stato:"presto" }
-];
-
-const REPARTI = [
-  { titolo:"Dermocosmesi", testo:"Viso, corpo, solari. Consulenza sulla tua pelle.", img:"photo-1620916297397-a4a5402a3c6c" },
-  { titolo:"Mamma e infanzia", testo:"Latti, pappe, igiene e benessere del bambino.", img:"photo-1533483595632-c5f0e57a1936" },
-  { titolo:"Veterinaria", testo:"Antiparassitari, farmaci veterinari su ricetta, integratori.", img:"photo-1654895716780-b4664497420d" },
-  { titolo:"Fitoterapia e integratori", testo:"Fitoterapici, tisane e integratori selezionati.", img:"photo-1514733670139-4d87a1941d55" }
-];
-
-const FAQ = [
-  ["Cos'è il codice NRE e dove lo trovo?", "È il Numero di Ricetta Elettronica: un codice di 15 caratteri stampato sul promemoria cartaceo o inviato dal medico via SMS, email o app. Puoi trovare le tue ricette anche nel Fascicolo Sanitario Elettronico."],
-  ["Posso ritirare i farmaci per un familiare?", "Sì. Porta la tessera sanitaria della persona a cui è intestata la ricetta. Per alcuni farmaci può servire anche un documento di chi ritira."],
-  ["Devo prenotare per glicemia o pressione?", "No, le misurazioni rapide si fanno al bancone negli orari di apertura. Per ECG, Holter ed emoglobina glicata è meglio prenotare."],
-  ["L'ECG in farmacia è gratuito?", "Dipende. In Lombardia ECG e Holter in farmacia sono gratuiti per chi rientra nei requisiti regionali, per esempio con esenzione per patologia cardiovascolare e prescrizione del medico. Negli altri casi sono a pagamento: chiedici la tariffa."],
-  ["Se il farmaco non c'è, quanto tempo serve?", "Di solito lo ordiniamo e arriva entro il giorno lavorativo successivo. Ti scriviamo su WhatsApp appena è pronto."],
-  ["Come funziona l'ordine su WhatsApp?", "Scrivici cosa ti serve: ti confermiamo disponibilità e prezzo e ti inviamo un link per pagare online. Quando l'ordine è pronto ti avvisiamo e passi a ritirarlo in farmacia. I farmaci si pagano al momento del ritiro."],
-  ["Fate consegne a domicilio?", "Sì, per chi ha difficoltà a muoversi. Scrivici o chiamaci per accordarci su giorno e orario."],
-  ["C'è parcheggio?", "Sì, c'è un parcheggio gratuito vicino alla farmacia, anche con posti accessibili in carrozzina."],
-  ["Dove trovo la farmacia di turno?", "Usa il pulsante «Farmacie di turno» in questa pagina o l'app Farmacia Aperta. In caso di emergenza chiama il 112."]
-];
-
-/* =====================================================================
-   DA QUI IN GIÙ: logica del sito (non serve modificarla)
-   ===================================================================== */
-const $ = (s, r=document) => r.querySelector(s);
-const $$ = (s, r=document) => [...r.querySelectorAll(s)];
-const GIORNI = ["Domenica","Lunedì","Martedì","Mercoledì","Giovedì","Venerdì","Sabato"];
-const ICONS = {
-  drop:'<path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/>',
-  tube:'<path d="M14.5 2v17.5a2.5 2.5 0 0 1-5 0V2"/><path d="M8.5 2h7M14.5 16h-5"/>',
-  gauge:'<path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/>',
-  heart:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/>',
-  pulse:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
-  wind:'<path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/>',
-  syringe:'<path d="m18 2 4 4M17 7l3-3M19 9 8.7 19.3a2.4 2.4 0 0 1-3.4 0l-.6-.6a2.4 2.4 0 0 1 0-3.4L15 5M9 11l4 4M5 19l-3 3M14 4l6 6"/>',
-  shield:'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
-  calendar:'<rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
-  user:'<circle cx="10" cy="8" r="5"/><path d="M2 21a8 8 0 0 1 10.4-7.6M16 19l2 2 4-4"/>',
-  file:'<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M14 2v6h6M16 13H8M16 17H8"/>',
-  truck:'<path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2M15 18H9M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/>',
-  scale:'<circle cx="12" cy="5" r="3"/><path d="M6.5 8a2 2 0 0 0-1.9 1.46L2.1 18.5A2 2 0 0 0 4 21h16a2 2 0 0 0 1.92-2.54L19.4 9.5A2 2 0 0 0 17.48 8Z"/>'
-};
-const icon = (k, cls="h-5 w-5") => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k]||""}</svg>`;
-const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const waLink = text => CONFIG.whatsapp ? `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}` : "tel:" + CONFIG.telefono.replace(/\s/g,"");
-const toast = msg => { const t=$("#toast"); t.firstElementChild.textContent=msg; t.style.opacity=1; clearTimeout(toast._t); toast._t=setTimeout(()=>t.style.opacity=0,3200); };
-
-/* ---------- Testi e link dal CONFIG ---------- */
-function bindConfig(){
-  const extra = { whatsappLabel: CONFIG.whatsapp.startsWith("390") ? CONFIG.telefono : "+" + CONFIG.whatsapp.replace(/^(\d{2})(\d{3})(\d{3})(\d+)$/, "$1 $2 $3 $4") };
-  $$("[data-cfg]").forEach(el => { const k=el.dataset.cfg; el.textContent = CONFIG[k] ?? extra[k] ?? ""; });
-  const hrefs = {
-    tel: "tel:" + CONFIG.telefono.replace(/\s/g,""),
-    mail: "mailto:" + CONFIG.email,
-    maps: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.mapsQuery),
-    turniUrl: CONFIG.turniUrl
-  };
-  $$("[data-href]").forEach(el => el.href = hrefs[el.dataset.href]);
-  $$("[data-wa]").forEach(el => el.href = CONFIG.whatsapp ? waLink(el.dataset.wa) : hrefs.tel);
-  if (!CONFIG.email) $$('[data-href="mail"], [data-via="mail"]').forEach(el => el.remove());
-  if (!CONFIG.whatsapp) $$('[data-wa-only]').forEach(el => el.remove());
-  $$("[data-cfg=email]").forEach(el => { if (!CONFIG.email) el.textContent = "tel. " + CONFIG.telefono; });
-  const g = CONFIG.google;
-  $$("[data-rating]").forEach(el => { if (!g || !g.recensioni) return el.remove(); el.href = g.url; el.querySelector(".r-voto").textContent = g.voto; el.querySelector(".r-num").textContent = g.recensioni + " recensioni su Google"; });
-  const cl = $("#comodita"); if (cl) cl.innerHTML = (CONFIG.comodita||[]).map(c => `<li class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-sm"><span class="h-1.5 w-1.5 rounded-full bg-cross"></span>${esc(c)}</li>`).join("");
-  $("#year").textContent = new Date().getFullYear();
-}
-
-/* ---------- Foto: usa le tue se presenti, altrimenti quelle di esempio ---------- */
-function setupPhotos(){
-  $$("img[data-fallback]").forEach(img => {
-    const fb = () => { if (img.src !== img.dataset.fallback) img.src = img.dataset.fallback; };
-    img.addEventListener("error", fb, { once:true });
-    if (img.complete && img.naturalWidth === 0) fb();
-  });
-  if (new URLSearchParams(location.search).has("foto")) {
-    document.body.classList.add("foto-mode");
-    toast("Modalità foto: i bordi arancioni indicano dove vanno le tue foto");
-  }
-}
-
-/* ---------- Orari, festivi, stato aperto/chiuso (ora italiana) ---------- */
-function romeNow(){
-  const p = Object.fromEntries(new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Rome",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(new Date()).map(x=>[x.type,x.value]));
-  const d = new Date(Date.UTC(+p.year, +p.month-1, +p.day));
-  return { date:d, min: +p.hour*60 + +p.minute };
-}
-const iso = d => d.toISOString().slice(0,10);
-const addDays = (d,n) => new Date(d.getTime() + n*864e5);
-const toMin = s => { const [h,m]=s.split(":"); return h*60 + +m; };
-const fmt = s => s.replace(/^0/,"");
-function easter(y){ const a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),mo=Math.floor((h+l-7*m+114)/31),da=((h+l-7*m+114)%31)+1; return new Date(Date.UTC(y,mo-1,da)); }
-function holidayName(d){
-  const y=d.getUTCFullYear(), md=iso(d).slice(5);
-  const fixed = {"01-01":"Capodanno","01-06":"Epifania","04-25":"Festa della Liberazione","05-01":"Festa del Lavoro","06-02":"Festa della Repubblica","08-15":"Ferragosto","11-01":"Ognissanti","12-08":"Immacolata","12-25":"Natale","12-26":"Santo Stefano"};
-  if (fixed[md]) return fixed[md];
-  const e = easter(y);
-  if (iso(d)===iso(e)) return "Pasqua";
-  if (iso(d)===iso(addDays(e,1))) return "Lunedì dell'Angelo";
-  return null;
-}
-function slotsFor(d){
-  const key = iso(d);
-  const turno = CONFIG.turni.find(t => t.data === key);
-  if (turno) return { slots: turno.orari, turno:true };
-  if (CONFIG.chiusure.includes(key)) return { slots: [], reason:"Chiusura straordinaria" };
-  const hol = holidayName(d);
-  if (hol) return { slots: [], reason: hol };
-  return { slots: CONFIG.orari[d.getUTCDay()] || [] };
-}
-const slotsText = s => s.length ? s.map(([a,b]) => `${fmt(a)}–${fmt(b)}`).join(" · ") : "Chiuso";
-
-function computeStatus(){
-  const { date, min } = romeNow();
-  const today = slotsFor(date);
-  for (const [a,b] of today.slots) {
-    if (min >= toMin(a) && min < toMin(b)) return { open:true, msg:`chiude alle ${fmt(b)}`, today, date };
-  }
-  const later = today.slots.find(([a]) => toMin(a) > min);
-  if (later) return { open:false, msg:`riapre oggi alle ${fmt(later[0])}`, today, date };
-  for (let i=1;i<=14;i++){
-    const d = addDays(date,i), s = slotsFor(d);
-    if (s.slots.length) return { open:false, msg:`riapre ${i===1?"domani":GIORNI[d.getUTCDay()].toLowerCase()} alle ${fmt(s.slots[0][0])}`, today, date };
-  }
-  return { open:false, msg:"", today, date };
-}
-
-function renderHours(){
-  const st = computeStatus();
-  const label = st.open ? "Aperta ora" : "Chiusa ora";
-  $$(".status-pill").forEach(e => { e.textContent = label; e.className = "status-pill rounded-full px-2.5 py-1 text-xs font-extrabold uppercase tracking-wider " + (st.open ? "bg-forest-50 text-forest-700" : "bg-coral/10 text-coral"); });
-  $$(".status-pill-dark").forEach(e => { e.textContent = label; e.className = "status-pill-dark shrink-0 rounded-full px-3 py-1 text-xs font-extrabold uppercase tracking-wider " + (st.open ? "bg-cross text-forest-900" : "bg-coral text-white"); });
-  const long = st.msg ? st.msg.charAt(0).toUpperCase()+st.msg.slice(1) : "";
-  $$(".status-long").forEach(e => e.textContent = long);
-  $$(".status-long-dark").forEach(e => e.textContent = (st.open ? "Siamo aperti, " : "Ora siamo chiusi, ") + st.msg + ".");
-  $$(".status-short").forEach(e => e.textContent = `${label} · ${st.msg}`);
-  $$(".status-dot").forEach(e => { e.style.background = st.open ? "#34C27A" : "#E2674A"; e.classList.toggle("pulse-dot", st.open); });
-  $$(".today-hours").forEach(e => e.textContent = st.today.reason ? `Chiuso (${st.today.reason})` : slotsText(st.today.slots));
-
-  // tabella settimanale (da lunedì)
-  const order = [1,2,3,4,5,6,0], todayIdx = st.date.getUTCDay();
-  $("#hoursTable").innerHTML = order.map(g => {
-    const cur = g === todayIdx;
-    return `<tr class="${cur ? "bg-white/10" : ""}"><th scope="row" class="rounded-l-lg py-2.5 pl-3 text-left font-semibold ${cur?"text-cross":""}">${GIORNI[g]}${cur?' <span class="ml-1 text-xs font-bold uppercase tracking-wider">oggi</span>':""}</th><td class="rounded-r-lg py-2.5 pr-3 text-right tabular-nums ${CONFIG.orari[g].length?"":"text-forest-100/60"}">${slotsText(CONFIG.orari[g])}</td></tr>`;
-  }).join("");
-  $("#footerHours").innerHTML = order.map(g => `<li class="flex justify-between gap-4"><span>${GIORNI[g]}</span><span class="tabular-nums">${slotsText(CONFIG.orari[g])}</span></li>`).join("");
-
-  const note = $("#holidayNote");
-  if (st.today.reason) { note.textContent = `Oggi è ${st.today.reason}: siamo chiusi. Controlla la farmacia di turno più vicina.`; note.classList.remove("hidden"); }
-  else if (st.today.turno) { note.textContent = `Oggi siamo di turno: ${slotsText(st.today.slots)}.`; note.classList.remove("hidden"); }
-  else note.classList.add("hidden");
-
-  // turni
-  const key = iso(st.date);
-  const next = CONFIG.turni.filter(t => t.data >= key).sort((a,b)=>a.data.localeCompare(b.data));
-  if (next[0] && next[0].data === key) {
-    $("#turnoToday").textContent = `Oggi siamo noi la farmacia di turno: ${slotsText(next[0].orari)}.`;
-    next.shift();
-  }
-  $("#turnoNext").textContent = next[0]
-    ? "Prossimo turno: " + new Date(next[0].data+"T12:00:00Z").toLocaleDateString("it-IT",{weekday:"long",day:"numeric",month:"long",timeZone:"UTC"}) + "."
-    : "Usa il servizio qui accanto per trovare la farmacia aperta più vicina.";
-
-  // distributore
-  if (CONFIG.distributoreAttivo) {
-    $("#h24Badge").textContent = "Attivo"; $("#h24Badge").className = "inline-flex rounded-full bg-forest-50 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-forest-700";
-    $("#h24Text").textContent = "Sotto il porticato trovi il nostro distributore di prodotti da farmacia, utilizzabile a qualsiasi ora, anche quando siamo chiusi.";
-    $$(".h24-short").forEach(e => e.textContent = "Attivo H24");
-  } else $$(".h24-short").forEach(e => e.textContent = "H24 in arrivo");
-}
-
-/* ---------- Servizi ---------- */
-const STATO = {
-  attivo:  ["Senza appuntamento","bg-forest-50 text-forest-700"],
-  prenota: ["Su prenotazione","bg-sun/20 text-ink"],
-  presto:  ["In arrivo","bg-line text-muted"]
-};
-function renderServices(filter="tutti"){
-  const list = SERVIZI.filter(s => filter==="tutti" || s.cat===filter);
-  $("#serviceGrid").innerHTML = list.map(s => {
-    const [lab, cls] = STATO[s.stato];
-    const cta = s.stato === "presto"
-      ? `<span class="text-sm font-semibold text-muted">Disponibile a breve</span>`
-      : `<a href="${waLink(`Buongiorno, vorrei informazioni / prenotare: ${s.titolo}.`)}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-sm font-extrabold text-forest-600 hover:text-forest-700">${s.stato==="prenota"?"Prenota":"Chiedi info"} <svg class="h-4 w-4 transition group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>`;
-    return `<article class="group card flex flex-col p-6 transition hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-24px_rgba(14,77,63,.45)]">
-      <div class="flex items-start justify-between gap-3">
-        <span class="grid h-12 w-12 place-items-center rounded-2xl bg-forest-50 text-forest-700">${icon(s.icona,"h-6 w-6")}</span>
-        <span class="rounded-full px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wider ${cls}">${lab}</span>
-      </div>
-      <h3 class="mt-5 text-lg font-extrabold">${esc(s.titolo)}</h3>
-      <p class="mt-1.5 flex-1 text-[15px] leading-relaxed text-muted">${esc(s.testo)}</p>
-      <div class="mt-5 border-t border-line pt-4">${cta}</div>
-    </article>`;
-  }).join("");
-}
-function setFilter(f){
-  $$("[data-filter]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.filter===f)));
-  renderServices(f);
-}
-
-function renderReparti(){
-  $("#repartiGrid").innerHTML = REPARTI.map(r => `
-    <article class="reveal group relative overflow-hidden rounded-3xl bg-forest-100">
-      <img src="https://images.unsplash.com/${r.img}?w=700&h=900&fit=crop&q=70&auto=format" alt="" loading="lazy" class="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-105" width="700" height="900">
-      <div class="absolute inset-0 bg-gradient-to-t from-forest-900/90 via-forest-900/20 to-transparent"></div>
-      <div class="absolute inset-x-0 bottom-0 p-4 text-white sm:p-5">
-        <h4 class="font-display text-xl font-semibold sm:text-2xl">${esc(r.titolo)}</h4>
-        <p class="mt-1 text-xs text-white/85 sm:text-sm">${esc(r.testo)}</p>
-      </div>
-    </article>`).join("");
-}
-
-function renderStaff(){
-  $("#staffGrid").innerHTML = CONFIG.staff.map((p,i) => {
-    const titolo = p.nome || p.ruolo, sotto = p.nome ? p.ruolo : "Farmacia Comunale Canegrate";
-    return `<article class="reveal card overflow-hidden">
-      <div class="relative aspect-[4/3] bg-forest-50" data-foto="${esc(p.foto)}">
-        <div class="absolute inset-0 grid place-items-center">
-          <span class="grid h-24 w-24 place-items-center rounded-full bg-paper ring-8 ring-forest-100"><svg viewBox="0 0 32 32" class="h-10 w-10" aria-hidden="true"><path d="M13 5h6v8h8v6h-8v8h-6v-8H5v-6h8z" fill="#34C27A"/></svg></span>
-        </div>
-        <img src="${esc(p.foto)}" alt="${esc(titolo)}" loading="lazy" class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()">
-      </div>
-      <div class="p-5"><p class="text-lg font-extrabold">${esc(titolo)}</p><p class="text-sm text-muted">${esc(sotto)}</p></div>
-    </article>`;
-  }).join("");
-}
-
-function renderFaq(){
-  $("#faqList").innerHTML = FAQ.map(([q,a]) => `
-    <details class="reveal group card px-6 py-5 open:border-forest-500">
-      <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-bold [&::-webkit-details-marker]:hidden">${esc(q)}
-        <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-forest-50 text-forest-700 transition group-open:rotate-45"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
-      </summary>
-      <p class="mt-3 leading-relaxed text-muted">${esc(a)}</p>
-    </details>`).join("");
-}
-
-/* ---------- Form ricetta ---------- */
-let rxTab = "ricetta";
-function addNreField(value=""){
-  const list = $("#nreList"), n = list.children.length;
-  if (n >= 10) return toast("Massimo 10 ricette per messaggio");
-  const row = document.createElement("div");
-  row.className = "flex gap-2";
-  row.innerHTML = `<input class="field font-mono uppercase tracking-wider" id="nre${n}" name="nre" maxlength="15" autocomplete="off" spellcheck="false" placeholder="030A0XXXXXXXXXX" aria-label="Codice NRE ${n+1}" value="${esc(value)}">` +
-    (n ? `<button type="button" class="grid w-12 shrink-0 place-items-center rounded-xl border border-line bg-paper text-muted hover:text-coral" aria-label="Rimuovi"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>` : "");
-  row.querySelector("button")?.addEventListener("click", () => row.remove());
-  list.appendChild(row);
-  if (n) row.querySelector("input").focus();
-}
-function setTab(t){
-  rxTab = t;
-  $$(".tab").forEach(b => {
-    const on = b.dataset.tab === t;
-    b.setAttribute("aria-selected", on);
-    b.className = "tab rounded-full px-4 py-2.5 text-sm font-extrabold transition " + (on ? "bg-forest-700 text-white" : "text-muted hover:text-ink");
-  });
-  $$("[data-pane]").forEach(p => p.classList.toggle("hidden", p.dataset.pane !== t));
-}
-function showErr(el, msg){ el.textContent = msg; el.classList.toggle("hidden", !msg); }
-function send(via, subject, body){
-  if (via === "mail") location.href = `mailto:${CONFIG.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  else if (CONFIG.whatsapp) window.open(waLink(body), "_blank", "noopener");
-  else { location.href = waLink(""); return; }
-  toast(via === "mail" ? "Si apre la tua email: premi Invia per completare" : "Si apre WhatsApp: premi Invia per completare");
-}
-
-function setupRxForm(){
-  addNreField();
-  $("#addNre").addEventListener("click", () => addNreField());
-  $$(".tab").forEach(b => b.addEventListener("click", () => setTab(b.dataset.tab)));
-  setTab("ricetta");
-  $("#rxForm").addEventListener("submit", e => {
-    e.preventDefault();
-    const via = e.submitter?.dataset.via || "wa", f = e.target, err = $("#rxError");
-    const nome = f.nome.value.trim(), tel = f.tel.value.trim();
-    if (!nome) return showErr(err, "Inserisci nome e cognome.");
-    if (tel.replace(/\D/g,"").length < 8) return showErr(err, "Inserisci un numero di telefono valido.");
-    let corpo = "";
-    if (rxTab === "ricetta") {
-      const codes = $$("#nreList input").map(i => i.value.replace(/\s/g,"").toUpperCase()).filter(Boolean);
-      if (!codes.length) return showErr(err, "Inserisci almeno un codice NRE.");
-      const bad = codes.find(c => !/^[0-9A-Z]{15}$/.test(c));
-      if (bad) return showErr(err, `Il codice ${bad} non sembra valido: deve avere 15 caratteri.`);
-      corpo = `Ricette (NRE):\n${codes.map((c,i)=>`${i+1}. ${c}`).join("\n")}` + (f.delega.checked ? "\nRitira un delegato." : "");
-    } else {
-      const p = f.prodotto.value.trim();
-      if (!p) return showErr(err, "Scrivici quale prodotto ti serve.");
-      corpo = `Prodotto richiesto: ${p}` + (f.pagaOnline.checked ? "\nVorrei pagare online: mandatemi il link di pagamento." : "\nPago al ritiro.");
-    }
-    if (!$("#rxPrivacy").checked) return showErr(err, "Per continuare accetta l'informativa privacy.");
-    showErr(err, "");
-    const body = `Buongiorno, sono ${nome} (tel. ${tel}).\nVorrei prenotare:\n${corpo}\nRitiro: ${f.quando.value}` + (f.note.value.trim() ? `\nNote: ${f.note.value.trim()}` : "") + `\nGrazie!`;
-    send(via, `Prenotazione ${rxTab==="ricetta"?"ricetta":"prodotto"} – ${nome}`, body);
-  });
-}
-
-function setupMsgForm(){
-  $("#msgForm").addEventListener("submit", e => {
-    e.preventDefault();
-    const via = e.submitter?.dataset.via || "wa", err = $("#mError");
-    const nome = $("#mNome").value.trim(), testo = $("#mTesto").value.trim();
-    if (!nome) return showErr(err, "Inserisci il tuo nome.");
-    if (!testo) return showErr(err, "Scrivi il tuo messaggio.");
-    if (!$("#mPrivacy").checked) return showErr(err, "Per continuare accetta l'informativa privacy.");
-    showErr(err, "");
-    const tel = $("#mTel").value.trim();
-    send(via, `${$("#mArg").value} – ${nome}`, `Buongiorno, sono ${nome}${tel?` (tel. ${tel})`:""}.\nArgomento: ${$("#mArg").value}\n\n${testo}`);
-  });
-}
-
-/* ---------- Interfaccia ---------- */
-function setupUI(){
-  const btn = $("#menuBtn"), nav = $("#mobileNav");
-  btn.addEventListener("click", () => { const o = nav.classList.toggle("hidden"); btn.setAttribute("aria-expanded", String(!o)); });
-  $$("#mobileNav a").forEach(a => a.addEventListener("click", () => { nav.classList.add("hidden"); btn.setAttribute("aria-expanded","false"); }));
-
-  $$("[data-filter]").forEach(b => b.addEventListener("click", () => setFilter(b.dataset.filter)));
-  $$("[data-filter-link]").forEach(a => a.addEventListener("click", () => setFilter(a.dataset.filterLink)));
-
-  $$("[data-open]").forEach(b => b.addEventListener("click", () => $("#"+b.dataset.open).showModal()));
-
-  $("#loadMap").addEventListener("click", () => {
-    $("#mapBox").innerHTML = `<iframe title="Mappa: ${esc(CONFIG.indirizzo)}" class="absolute inset-0 h-full w-full" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=${encodeURIComponent(CONFIG.mapsQuery)}&output=embed"></iframe>`;
-  });
-
-  // voce di menu attiva durante lo scroll
-  const links = $$(".navlink");
-  const io = new IntersectionObserver(entries => entries.forEach(en => {
-    if (en.isIntersecting) links.forEach(l => l.classList.toggle("is-active", l.getAttribute("href") === "#"+en.target.id));
-  }), { rootMargin: "-45% 0px -50% 0px" });
-  ["home","servizi","prenota","chi-siamo","dove","contatti"].forEach(id => io.observe($("#"+id)));
-
-  // animazioni di comparsa
-  const rv = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); rv.unobserve(e.target); } }), { threshold: .12 });
-  $$(".reveal").forEach(el => rv.observe(el));
-}
-
-/* ---------- Dati strutturati per Google (SEO locale) ---------- */
-function jsonLd(){
-  const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-  const spec = [];
-  Object.entries(CONFIG.orari).forEach(([g, slots]) => slots.forEach(([o,c]) => spec.push({ "@type":"OpeningHoursSpecification", dayOfWeek: days[g], opens:o, closes:c })));
-  const s = document.createElement("script");
-  s.type = "application/ld+json";
-  s.textContent = JSON.stringify({
-    "@context":"https://schema.org", "@type":"Pharmacy", name: CONFIG.nome,
-    telephone: CONFIG.telefono, ...(CONFIG.email ? { email: CONFIG.email } : {}), url: location.origin + location.pathname,
-    image: "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=1200&q=75&auto=format",
-    address: { "@type":"PostalAddress", streetAddress: CONFIG.indirizzo.split("·")[0].trim(), addressLocality:"Canegrate", postalCode:"20039", addressRegion:"MI", addressCountry:"IT" },
-    areaServed: ["Canegrate","Legnano","Parabiago","Cerro Maggiore","San Vittore Olona","Nerviano"],
-    openingHoursSpecification: spec
-  });
-  document.head.appendChild(s);
-}
-
-bindConfig();
-setupPhotos();
-renderServices();
-renderReparti();
-renderStaff();
-renderFaq();
-renderHours();
-setInterval(renderHours, 60000);
-setupRxForm();
-setupMsgForm();
-setupUI();
-jsonLd();
-</script>
+<script src="/assets/config.js?v=2026101713"></script>
+<script src="/assets/site.js?v=2026101713" defer></script>
 </body>
 </html>

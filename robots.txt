@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /sorgente/
 
 Sitemap: https://www.gruppofarmapoint.it/sitemap.xml
