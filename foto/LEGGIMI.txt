@@ -1,7 +1,9 @@
-Le foto attuali del sito sono foto di esempio gratuite di Pexels (cottonbro studio, licenza Pexels),
-caricate direttamente dai loro link in sorgente/build.mjs (cerca "images.pexels.com").
-
-Per usare foto vostre: mettetele in questa cartella (es. negozio.jpg, team.jpg, vetrina.jpg)
-e in sorgente/build.mjs sostituite il link Pexels con "/foto/nome-file.jpg".
-Consigli: JPG orizzontale, lato lungo 1600 px, peso < 400 KB (comprimi gratis su squoosh.app).
+Foto del sito (già ottimizzate: versioni .webp leggere per il sito + .jpg di riserva).
+  negozio.*    -> foto grande in apertura della home (farmacista)
+  team.*       -> sezione "Chi siamo" della home (interno farmacia)
+  chi-siamo.*  -> pagina Chi siamo (farmacista)
+  vetrina.*    -> pagina Ordina su WhatsApp (interno farmacia, foto larga)
+  og.jpg       -> anteprima quando il sito viene condiviso su WhatsApp/Facebook (1200x630)
+Per cambiare una foto basta sostituire i file con lo stesso nome (stesse proporzioni).
+I numeri nel nome (es. negozio-480.webp) sono le versioni piccole per i telefoni.
 Per vedere dove va ogni foto apri una pagina del sito aggiungendo ?foto=1 all'indirizzo.
