@@ -264,7 +264,8 @@ const footer = () => `
         <li><a class="hover:text-white" href="/orari-e-dove-siamo/">Orari e dove siamo</a></li>
         <li><a class="hover:text-white" href="/domande-frequenti/">Domande frequenti</a></li>
         <li><a class="hover:text-white" href="/contatti/">Contatti</a></li>
-        <li><a class="hover:text-white" href="/privacy/">Privacy e cookie</a></li>
+        <li><a class="hover:text-white" href="/privacy/">Privacy</a></li>
+        <li><a class="hover:text-white" href="/cookie-policy/">Cookie policy</a></li>
         <li><a class="hover:text-white" href="https://www.fascicolosanitario.regione.lombardia.it/" target="_blank" rel="noopener">Fascicolo Sanitario Lombardia ↗</a></li>
       </ul>
     </div>
@@ -1395,9 +1396,57 @@ add({
     <h2>Per quanto tempo</h2>
     <p>Il tempo necessario a evadere la richiesta e agli obblighi di legge.</p>
     <h2>Cookie</h2>
-    <p>Il sito non usa cookie di profilazione né statistiche. La mappa di Google e i caratteri tipografici sono forniti da servizi esterni; la mappa si carica solo se la richiedi.</p>
+    <p>Il sito non usa cookie di profilazione né statistiche. La mappa di Google e i caratteri tipografici sono forniti da servizi esterni; la mappa si carica solo se la richiedi. Tutti i dettagli nella <a href="/cookie-policy/">Cookie policy</a>.</p>
     <h2>I tuoi diritti</h2>
     <p>Accesso, rettifica, cancellazione, limitazione e reclamo al Garante Privacy (<a href="https://www.garanteprivacy.it/" target="_blank" rel="noopener">garanteprivacy.it</a>).</p>
+  </div>
+</section>`
+});
+
+/* ---------------------------------------------------------------- COOKIE POLICY */
+add({
+  path: "/cookie-policy/", priority: "0.2",
+  title: "Cookie policy | Farmacia Comunale Canegrate",
+  description: "Quali cookie e strumenti simili usa il sito della Farmacia Comunale di Canegrate e come gestirli dal tuo browser.",
+  crumbs: [HOME, ["Cookie policy", "/cookie-policy/"]],
+  body: `
+<section class="mx-auto max-w-3xl px-4 pb-20 pt-8 sm:px-6 lg:pt-12">
+  <h1 class="font-display text-[38px] font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl">Cookie policy</h1>
+  <p class="mt-4 text-sm text-muted">Ultimo aggiornamento: ${OGGI.split("-").reverse().join("/")}</p>
+  <!-- Testo generico: fallo verificare dal vostro consulente privacy -->
+  <div class="prose-farmacia mt-8">
+    <h2>Cosa sono i cookie</h2>
+    <p>I cookie sono piccoli file di testo che i siti salvano sul tuo dispositivo mentre navighi. Strumenti simili, come la memoria locale del browser (<em>localStorage</em>), funzionano allo stesso modo. Servono a far funzionare il sito, a ricordare le tue scelte o, in alcuni casi, a raccogliere statistiche e mostrare pubblicità.</p>
+    <h2>Il titolare</h2>
+    <p>${esc(C.gestore)}, P. IVA ${esc(C.piva)}, sede legale ${esc(C.sedeLegale)}. Contatto: ${C.email ? esc(C.email) : "tel. " + esc(C.telefono)}.</p>
+    <h2>Cookie usati da questo sito</h2>
+    <p><strong>Questo sito non usa cookie di profilazione, pubblicitari o statistici.</strong> Usa solo strumenti tecnici, necessari al funzionamento:</p>
+    <ul>
+      <li><strong>Memoria locale del browser</strong>: ricorda per un giorno che hai chiuso il messaggio di benvenuto, per non mostrartelo di nuovo. Non contiene dati personali e resta solo sul tuo dispositivo.</li>
+    </ul>
+    <p>Per gli strumenti tecnici non serve il consenso (art. 122 del Codice privacy e Linee guida del Garante del 10 giugno 2021), per questo il sito non mostra un banner.</p>
+    <h2>Servizi di terze parti</h2>
+    <p>Il sito si appoggia ad alcuni servizi esterni, che possono ricevere dati tecnici come l'indirizzo IP del tuo dispositivo e, in alcuni casi, impostare cookie propri. Per questi vale l'informativa del rispettivo fornitore:</p>
+    <ul>
+      <li><strong>GitHub Pages</strong> (GitHub, Inc.): ospita il sito. Per motivi di sicurezza può registrare l'indirizzo IP dei visitatori nei log del server. <a href="https://docs.github.com/it/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">Informativa GitHub</a>.</li>
+      <li><strong>Google Fonts</strong> (Google): fornisce i caratteri tipografici delle pagine. Non imposta cookie. <a href="https://policies.google.com/privacy?hl=it" target="_blank" rel="noopener">Informativa Google</a>.</li>
+      <li><strong>Google Maps</strong>: la mappa si carica solo se premi «Mostra la mappa»; da quel momento Google può impostare i suoi cookie.</li>
+      <li><strong>Google Traduttore</strong>: si attiva solo se scegli un'altra lingua dal menu «Lingua».</li>
+      <li><strong>WhatsApp</strong> (Meta): i pulsanti WhatsApp aprono l'app o il sito di WhatsApp, dove vale la <a href="https://www.whatsapp.com/legal/privacy-policy-eea?lang=it" target="_blank" rel="noopener">sua informativa</a>.</li>
+    </ul>
+    <h2>Come gestire o cancellare i cookie</h2>
+    <p>Puoi vedere, bloccare o cancellare cookie e memoria locale in qualsiasi momento dalle impostazioni del tuo browser:</p>
+    <ul>
+      <li><a href="https://support.google.com/chrome/answer/95647?hl=it" target="_blank" rel="noopener">Google Chrome</a></li>
+      <li><a href="https://support.mozilla.org/it/kb/protezione-antitracciamento-avanzata-firefox-desktop" target="_blank" rel="noopener">Mozilla Firefox</a></li>
+      <li><a href="https://support.apple.com/it-it/guide/safari/sfri11471/mac" target="_blank" rel="noopener">Apple Safari</a></li>
+      <li><a href="https://support.microsoft.com/it-it/microsoft-edge/eliminare-i-cookie-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09" target="_blank" rel="noopener">Microsoft Edge</a></li>
+    </ul>
+    <p>Bloccando i cookie tecnici alcune funzioni del sito potrebbero non funzionare come previsto.</p>
+    <h2>I tuoi diritti</h2>
+    <p>Per sapere come trattiamo i tuoi dati e come esercitare i tuoi diritti leggi l'<a href="/privacy/">Informativa privacy</a>. Puoi sempre presentare reclamo al Garante Privacy (<a href="https://www.garanteprivacy.it/" target="_blank" rel="noopener">garanteprivacy.it</a>).</p>
+    <h2>Modifiche</h2>
+    <p>Questa pagina può essere aggiornata se cambiano i servizi usati dal sito. La data in alto indica l'ultima modifica.</p>
   </div>
 </section>`
 });
