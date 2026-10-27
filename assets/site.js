@@ -251,6 +251,42 @@ function setupLang(){
   document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
 }
 
+/* ---------- Avviso cookie (al primo accesso, si chiude con «Ho capito») ---------- */
+function setupCookie(){
+  const KEY = "fc-cookie";
+  let ok = null;
+  try { ok = localStorage.getItem(KEY); } catch(e) {}
+  if (ok || /translate\.goog$/.test(location.hostname)) return;
+  window.fcCookiePending = true;
+  const box = document.createElement("aside");
+  box.setAttribute("aria-label", "Avviso sui cookie");
+  box.className = "cookie-card fixed inset-x-3 bottom-[92px] z-[55] sm:inset-x-auto sm:left-6 sm:w-[400px] lg:bottom-6";
+  box.innerHTML = `
+    <div class="rounded-3xl border border-line bg-paper p-4 sm:p-5 shadow-[0_24px_60px_-24px_rgba(14,77,63,.55)]">
+      <div class="flex gap-3">
+        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-forest-50 text-forest-700"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5h.01M16 15.5h.01M12 12h.01M11 17h.01M7 14h.01"/></svg></span>
+        <div class="min-w-0">
+          <p class="font-display text-base font-semibold leading-snug text-ink">Questo sito usa solo cookie tecnici</p>
+          <p class="mt-1 text-[13px] leading-snug text-muted sm:text-sm">Servono a far funzionare il sito. Non usiamo cookie di profilazione, pubblicitari o statistici.</p>
+        </div>
+      </div>
+      <div class="mt-3.5 flex flex-wrap items-center justify-end gap-2">
+        <a href="/cookie-policy/" class="rounded-full px-3.5 py-2 text-[13px] font-bold text-forest-700 underline underline-offset-2 hover:text-forest-900 sm:text-sm">Leggi la cookie policy</a>
+        <button type="button" class="cookie-ok rounded-full bg-forest-700 px-5 py-2 text-[13px] font-bold text-white hover:bg-forest-900 sm:text-sm">Ho capito</button>
+      </div>
+    </div>`;
+  const ok_ = () => {
+    try { localStorage.setItem(KEY, new Date().toISOString().slice(0, 10)); } catch(e) {}
+    box.classList.remove("in");
+    setTimeout(() => box.remove(), 400);
+    window.fcCookiePending = false;
+    document.dispatchEvent(new Event("fc-cookie-ok"));
+  };
+  box.querySelector(".cookie-ok").addEventListener("click", ok_);
+  document.body.appendChild(box);
+  requestAnimationFrame(() => requestAnimationFrame(() => box.classList.add("in")));
+}
+
 /* ---------- Bigliettino di benvenuto (1 volta al giorno, si chiude con la X) ---------- */
 function setupHello(){
   const KEY = "fc-ciao", path = location.pathname;
@@ -299,7 +335,9 @@ function setupHello(){
   box.querySelector(".hello-x").addEventListener("click", hide);
   box.querySelector(".hello-go").addEventListener("click", remember);
   document.addEventListener("keydown", e => { if (e.key === "Escape" && box.isConnected) hide(); });
-  setTimeout(() => { document.body.appendChild(box); requestAnimationFrame(() => requestAnimationFrame(() => box.classList.add("in"))); }, 3000);
+  const show = () => { document.body.appendChild(box); requestAnimationFrame(() => requestAnimationFrame(() => box.classList.add("in"))); };
+  if (window.fcCookiePending) document.addEventListener("fc-cookie-ok", () => setTimeout(show, 1500), { once: true });
+  else setTimeout(show, 3000);
 }
 
 bindConfig();
@@ -311,5 +349,6 @@ setupRxForm();
 setupMsgForm();
 setupUI();
 setupLang();
+setupCookie();
 setupHello();
 })();
