@@ -258,7 +258,7 @@ function setupHello(){
   try { seen = localStorage.getItem(KEY); } catch(e) {}
   const st = computeStatus(), today = iso(st.date);
   if (seen === today || /translate\.goog$/.test(location.hostname)) return;
-  if (path.startsWith("/privacy")) return;
+  if (path.startsWith("/privacy") || path.startsWith("/cookie-policy")) return;
   const { min } = romeNow();
   const saluto = min < 300 ? "Buonanotte" : min < 720 ? "Buongiorno" : min < 1080 ? "Buon pomeriggio" : min < 1350 ? "Buonasera" : "Buonanotte";
   const notte = min < 360 || min >= 1170;
